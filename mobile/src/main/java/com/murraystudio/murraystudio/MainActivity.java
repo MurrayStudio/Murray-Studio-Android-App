@@ -1,29 +1,20 @@
 package com.murraystudio.murraystudio;
 
-import android.app.Activity;
-
-import android.app.ActionBar;
 import android.support.v4.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -41,28 +32,31 @@ public class MainActivity extends ActionBarActivity implements
     private MyAdapter myAdapter;
     private ActionBarDrawerToggle drawerListener;
     private Fragment fragment;
+    private FragmentTransaction fragmentTrans;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fragment = new MadlibsAbout();
-
-        FragmentTransaction fm = getSupportFragmentManager()
+        //load home fragment on creation
+        fragment = new Home();
+        fragmentTrans = getSupportFragmentManager()
                 .beginTransaction();
-        fm.replace(R.id.fragment_container, fragment);
-        fm.addToBackStack(null);
-        fm.commit();
+        fragmentTrans.replace(R.id.fragment_container, fragment);
+        fragmentTrans.addToBackStack(null);
+        fragmentTrans.commit();
 
-
+        //init the toolbar for use here and in fragments
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-
+        //init layouts
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         frameLayout = (FrameLayout) findViewById(R.id.fragment_container);
         listView = (ListView) findViewById(R.id.drawerList);
+
+        //set up adapter to display nav drawer items
         myAdapter = new MyAdapter(this);
         listView.setAdapter(myAdapter);
         listView.setOnItemClickListener(this);
@@ -91,7 +85,6 @@ public class MainActivity extends ActionBarActivity implements
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             drawerListener.syncState();
-
         }
     }
 
@@ -131,7 +124,7 @@ public class MainActivity extends ActionBarActivity implements
     }
 
     private void selectItem(int position) {
-        fragment = new MadlibsAbout();
+        fragment = new Home();
         // FragmentManager fm = getSupportFragmentManager();
 
 /*        switch (position) {
@@ -144,71 +137,71 @@ public class MainActivity extends ActionBarActivity implements
         }*/
 
 
+        FragmentTransaction fm = getSupportFragmentManager()
+                .beginTransaction();
+        fm.replace(R.id.fragment_container, fragment);
+        fm.addToBackStack(null);
+        fm.commit();
 
-            FragmentTransaction fm = getSupportFragmentManager()
-                    .beginTransaction();
-            fm.replace(R.id.fragment_container, fragment);
-            fm.addToBackStack(null);
-            fm.commit();
-
-            if (drawerLayout != null) {
-                drawerLayout.closeDrawers();
-            }
-
-
-}
-
-class MyAdapter extends BaseAdapter {
-    private Context context;
-    String[] Madlibs;
-    int[] images = {R.drawable.note, R.drawable.pen, R.drawable.stack,
-            R.drawable.settings, R.drawable.user};
-
-    public MyAdapter(Context context) {
-        this.context = context;
-        Madlibs = context.getResources().getStringArray(R.array.Madlibs);
-    }
-
-    @Override
-    public int getCount() {
-        // TODO Auto-generated method stub
-        return Madlibs.length;
-    }
-
-    @Override
-    public Object getItem(int position) {
-        // TODO Auto-generated method stub
-        return Madlibs[position];
-    }
-
-    @Override
-    public long getItemId(int position) {
-        // TODO Auto-generated method stub
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
-        View row = null;
-        if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) context
-                    .getSystemService(context.LAYOUT_INFLATER_SERVICE);
-            row = inflater.inflate(R.layout.custom_row, parent, false);
-        } else {
-            row = convertView;
+        if (drawerLayout != null) {
+            drawerLayout.closeDrawers();
         }
-        TextView titleTextView = (TextView) row.findViewById(R.id.rowText);
-        ImageView titleImageView = (ImageView) row
-                .findViewById(R.id.imageView1);
 
-        //titleTextView.setTypeface(null, Typeface.BOLD);
 
-        titleTextView.setText(Madlibs[position]);
-        titleImageView.setImageResource(images[position]);
-
-        return row;
     }
-}
+
+    //adapter for nav drawer use
+    class MyAdapter extends BaseAdapter {
+        private Context context;
+        String[] Madlibs;
+        int[] images = {R.drawable.note, R.drawable.pen, R.drawable.stack,
+                R.drawable.settings, R.drawable.user};
+
+        public MyAdapter(Context context) {
+            this.context = context;
+            Madlibs = context.getResources().getStringArray(R.array.Madlibs);
+        }
+
+        @Override
+        public int getCount() {
+            // TODO Auto-generated method stub
+            return Madlibs.length;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            // TODO Auto-generated method stub
+            return Madlibs[position];
+        }
+
+        @Override
+        public long getItemId(int position) {
+            // TODO Auto-generated method stub
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            // TODO Auto-generated method stub
+            View row = null;
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) context
+                        .getSystemService(context.LAYOUT_INFLATER_SERVICE);
+                row = inflater.inflate(R.layout.custom_row, parent, false);
+            } else {
+                row = convertView;
+            }
+            TextView titleTextView = (TextView) row.findViewById(R.id.rowText);
+            ImageView titleImageView = (ImageView) row
+                    .findViewById(R.id.imageView1);
+
+            //titleTextView.setTypeface(null, Typeface.BOLD);
+
+            titleTextView.setText(Madlibs[position]);
+            titleImageView.setImageResource(images[position]);
+
+            return row;
+        }
+    }
 
 }

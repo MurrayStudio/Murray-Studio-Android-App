@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/mobile/src/main/java/com/murraystudio/murraystudio/MadlibsAbout.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/mobile/src/main/java/com/murraystudio/murraystudio/Home.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/mobile/src/main/res/drawable-hdpi/note.png" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/mobile/src/main/res/drawable-hdpi/pen.png" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/mobile/src/main/res/drawable-hdpi/settings.png" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/mobile/src/main/res/drawable-hdpi/stack.png" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/mobile/src/main/res/drawable-hdpi/user.png" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/mobile/src/main/res/layout/custom_row.xml" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/mobile/src/main/res/layout/madlibs_about.xml" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/mobile/src/main/res/layout/home.xml" charset="windows-1252" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
