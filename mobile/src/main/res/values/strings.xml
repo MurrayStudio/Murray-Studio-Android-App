@@ -11,4 +11,15 @@
     <string name="action_example">Example action</string>
 
     <string name="action_settings">Settings</string>
+
+    <string name="open">Open Drawer</string>
+    <string name="close">Close Drawer</string>
+
+    <string-array name="Madlibs">
+        <item>Story Studio Pro</item>
+        <item>Create Your Own</item>
+        <item>Saved Stories</item>
+        <item>Settings</item>
+        <item>About</item>
+    </string-array>
 </resources>
