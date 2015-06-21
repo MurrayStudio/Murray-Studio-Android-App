@@ -31,7 +31,6 @@ public class Home extends Fragment implements BaseSliderView.OnSliderClickListen
 	TextView changelog;
 	private final static String APP_NAME = "com.murraystudio.storystudiopro";
 	SliderLayout sliderShow;
-	ImageButton logo1;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,7 +49,7 @@ public class Home extends Fragment implements BaseSliderView.OnSliderClickListen
 		getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
 		int screenHeight = displaymetrics.heightPixels;
 		int screenWidth = displaymetrics.widthPixels;
-		double w = 0.975;
+		double w = 1.00;
 		int imgWidth =  (int) (screenWidth* w);
 		int imgHeight =  (int) (imgWidth/2.8);
 
@@ -87,24 +86,6 @@ public class Home extends Fragment implements BaseSliderView.OnSliderClickListen
 
 		sliderShow.addSlider(textSliderView3);
 
-
-
-		logo1 = (ImageButton) view.findViewById(R.id.logo1);
-		logo1.setOnTouchListener(new View.OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-
-				switch (event.getAction()) {
-					case MotionEvent.ACTION_DOWN:
-						logo1.setColorFilter(Color.argb(35, 255, 255, 255)); // White Tint
-						return true; // if you want to handle the touch event
-					case MotionEvent.ACTION_UP:
-						logo1.clearColorFilter(); // White Tint
-						return true; // if you want to handle the touch event
-				}
-				return false;
-			}
-		});
 
 		
 		return view;
