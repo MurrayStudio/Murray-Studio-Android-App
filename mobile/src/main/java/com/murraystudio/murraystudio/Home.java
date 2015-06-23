@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.DisplayMetrics;
@@ -31,6 +33,8 @@ public class Home extends Fragment implements BaseSliderView.OnSliderClickListen
 	TextView changelog;
 	private final static String APP_NAME = "com.murraystudio.storystudiopro";
 	SliderLayout sliderShow;
+	RecyclerView rv;
+	LinearLayoutManager llm;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,6 +46,12 @@ public class Home extends Fragment implements BaseSliderView.OnSliderClickListen
 		actionBar = (android.support.v7.app.ActionBar) ((MainActivity) getActivity())
 				.getSupportActionBar();
 		actionBar.setTitle("About");
+
+		rv = (RecyclerView) view.findViewById(R.id.cardList);
+		rv.setHasFixedSize(true);
+
+		llm = new LinearLayoutManager(getActivity());
+		rv.setLayoutManager(llm);
 
 		//calculate slideshow height and width based off screen dimensions and
 		//image size of 1400x500
