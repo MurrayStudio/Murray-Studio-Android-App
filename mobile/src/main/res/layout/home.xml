@@ -14,7 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
-            android:layoutAnimation="@anim/abc_grow_fade_in_from_bottom"
             android:orientation="vertical">
 
             <LinearLayout
