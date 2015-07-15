@@ -40,8 +40,8 @@ import org.w3c.dom.Text;
 /**
  * Provide views to RecyclerView with data from mDataSet.
  */
-public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private static final String TAG = "CustomAdapter";
+public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final String TAG = "HomeAdapter";
 
     //holds titles for cards, position 0 contains header placeholder string
     private String[] mDataSet;
@@ -98,7 +98,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
      *
      * @param dataSet String[] containing the data to populate views to be used by RecyclerView.
      */
-    public CustomAdapter(String[] dataSet, Context context) {
+    public HomeAdapter(String[] dataSet, Context context) {
         mDataSet = dataSet;
         this.context = context;
     }
@@ -130,7 +130,6 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
 
         return new ViewHolderFirst(v1);
-        //return new ViewHolder(v);
     }
 
     // Replace the contents of a view (invoked by the layout manager)

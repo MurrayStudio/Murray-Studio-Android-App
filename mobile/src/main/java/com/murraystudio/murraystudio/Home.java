@@ -16,7 +16,7 @@ public class Home extends Fragment {
     android.support.v7.app.ActionBar actionBar;
     //SliderLayout sliderShow;
     protected RecyclerView mRecyclerView;
-    protected CustomAdapter mAdapter;
+    protected HomeAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
     protected String[] mDataset;
     //private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -46,7 +46,7 @@ public class Home extends Fragment {
 
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new CustomAdapter(mDataset, getActivity());
+        mAdapter = new HomeAdapter(mDataset, getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
         //mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
@@ -80,7 +80,7 @@ public class Home extends Fragment {
             mDataset[i] = "This is butt #" + i;
         }
 
-        mAdapter = new CustomAdapter(mDataset, getActivity());
+        mAdapter = new HomeAdapter(mDataset, getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
         // Load complete

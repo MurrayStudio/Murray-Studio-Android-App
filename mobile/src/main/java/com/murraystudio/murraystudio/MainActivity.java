@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -19,6 +21,7 @@ import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
@@ -29,15 +32,23 @@ public class MainActivity extends ActionBarActivity implements
     protected DrawerLayout drawerLayout;
     private FrameLayout frameLayout;
     private ListView listView;
-    private MyAdapter myAdapter;
+    private NavAdapter navAdapter;
+    protected RecyclerView navRecyclerView;
+    protected RecyclerView.LayoutManager navLayoutManager;
     private ActionBarDrawerToggle drawerListener;
     private Fragment fragment;
     private FragmentTransaction fragmentTrans;
+    protected String[] mDataset;
+
+    //used to get width of relative layout for use in slidershow
+    private RelativeLayout navRelative;
+    private int widthOfNav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initDataset();
 
         //load home fragment on creation
         fragment = new Home();
@@ -54,12 +65,20 @@ public class MainActivity extends ActionBarActivity implements
         //init layouts
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         frameLayout = (FrameLayout) findViewById(R.id.fragment_container);
-        listView = (ListView) findViewById(R.id.drawerList);
 
+        navRelative = (RelativeLayout) findViewById(R.id.drawerView);
+        widthOfNav = navRelative.getLayoutParams().width;
+
+        //listView = (ListView) findViewById(R.id.drawerList);
+        navRecyclerView = (RecyclerView) findViewById(R.id.nav_recycler_view);
+        navLayoutManager = new LinearLayoutManager(this);
+        navRecyclerView.setLayoutManager(navLayoutManager);
         //set up adapter to display nav drawer items
-        myAdapter = new MyAdapter(this);
-        listView.setAdapter(myAdapter);
-        listView.setOnItemClickListener(this);
+        navAdapter = new NavAdapter(mDataset, this, widthOfNav);
+        navRecyclerView.setAdapter(navAdapter);
+
+        //listView.setAdapter(navAdapter);
+        //listView.setOnItemClickListener(this);
 
         if (drawerLayout != null) {
             drawerListener = new ActionBarDrawerToggle(this, drawerLayout, mToolbar,
@@ -150,7 +169,15 @@ public class MainActivity extends ActionBarActivity implements
 
     }
 
-    //adapter for nav drawer use
+    /**
+     * Generates Strings for RecyclerView's adapter. This data would usually come
+     * from a local content provider or remote server.
+     */
+    private void initDataset() {
+        mDataset = getResources().getStringArray(R.array.card_titles);
+    }
+
+/*    //adapter for nav drawer use
     class MyAdapter extends BaseAdapter {
         private Context context;
         String[] Madlibs;
@@ -202,6 +229,6 @@ public class MainActivity extends ActionBarActivity implements
 
             return row;
         }
-    }
+    }*/
 
 }
