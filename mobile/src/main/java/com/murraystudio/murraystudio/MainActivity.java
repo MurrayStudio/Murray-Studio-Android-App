@@ -12,6 +12,9 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -35,7 +38,6 @@ public class MainActivity extends ActionBarActivity {
     //INSTANCE VARS
     protected DrawerLayout drawerLayout;
     private FrameLayout frameLayout;
-    private ListView listView;
     private NavAdapter navAdapter;
     protected RecyclerView navRecyclerView;
     protected RecyclerView.LayoutManager navLayoutManager;
@@ -99,6 +101,16 @@ public class MainActivity extends ActionBarActivity {
                 if (child != null && mGestureDetector.onTouchEvent(motionEvent)) {
                     drawerLayout.closeDrawers();
                     Toast.makeText(MainActivity.this, "The Item Clicked is: " + recyclerView.getChildPosition(child), Toast.LENGTH_SHORT).show();
+
+                    fragment = new Projects();
+
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right);
+                    ft.replace(R.id.fragment_container, fragment);
+                    ft.addToBackStack(null);
+                    ft.commit();
+
+
                     return true;
                 }
 
