@@ -2,6 +2,7 @@ package com.murraystudio.murraystudio;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -11,7 +12,9 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,8 +32,10 @@ public class NavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     //holds titles for cards, position 0 contains header placeholder string
     private String[] mDataSet;
+
     //holds logos for cards, -1 used as header placeholder positon
-    private int[] logoArrayID = {-1, R.drawable.story_studio_logo, R.drawable.murray_studio_logo, R.drawable.graphics_logo};
+    //private int[] logoArrayID = {-1, R.drawable.story_studio_logo, R.drawable.murray_studio_logo, R.drawable.graphics_logo};
+
     // Allows to remember the last item shown on screen
     private int lastPosition = -1;
 
@@ -46,21 +51,16 @@ public class NavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
      * Provide a reference to the type of views that you are using (custom ViewHolder)
      */
     public static class ViewHolderFirst extends RecyclerView.ViewHolder {
-        private final TextView textView;
-        private final ImageView rowImage;
+        private final TextView navText;
 
         public ViewHolderFirst(View v) {
             super(v);
-            textView = (TextView) v.findViewById(R.id.rowText);
-            rowImage = (ImageView) v.findViewById(R.id.rowImage);
+            navText = (TextView) v.findViewById(R.id.nav_text);
+            //rowImage = (ImageView) v.findViewById(R.id.rowImage);
         }
 
-        public TextView getTextView() {
-            return textView;
-        }
-
-        public ImageView getRowImage() {
-            return rowImage;
+        public TextView getNavText() {
+            return navText;
         }
     }
 
@@ -76,7 +76,6 @@ public class NavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return sliderShow;
         }
     }
-
 
     public NavAdapter (String[] dataSet, Context context, int widthOfNav){
         mDataSet = dataSet;
@@ -110,9 +109,9 @@ public class NavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         switch (getItemViewType(position)) {
             case VIEW_TYPE_FIRST:
                 ViewHolderFirst viewHolderFirst = (ViewHolderFirst) holder;
-                viewHolderFirst.getTextView().setText(mDataSet[position]);
-                Drawable d = context.getResources().getDrawable(logoArrayID[position]);
-                viewHolderFirst.getRowImage().setImageDrawable(d);
+                viewHolderFirst.getNavText().setText(mDataSet[position]);
+                //Drawable d = context.getResources().getDrawable(logoArrayID[position]);
+                //viewHolderFirst.getRowImage().setImageDrawable(d);
                 setAnimation(viewHolderFirst.itemView, position);
                 break;
             case VIEW_TYPE_SECOND:

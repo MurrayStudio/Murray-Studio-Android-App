@@ -46,14 +46,11 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //holds titles for cards, position 0 contains header placeholder string
     private String[] mDataSet;
     //holds logos for cards, -1 used as header placeholder positon
-    private int[] logoArrayID = {-1, R.drawable.story_studio_logo, R.drawable.murray_studio_logo, R.drawable.graphics_logo};
+    private int[] logoArrayID = {R.drawable.story_studio_logo, R.drawable.murray_studio_logo, R.drawable.graphics_logo};
     // Allows to remember the last item shown on screen
     private int lastPosition = -1;
 
     private Context context;
-
-    private static final int VIEW_TYPE_FIRST = 1;
-    private static final int VIEW_TYPE_SECOND = 0;
 
 /*    */
 
@@ -79,19 +76,6 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    public static class ViewHolderSecond extends RecyclerView.ViewHolder {
-        private final SliderLayout sliderShow;
-
-        public ViewHolderSecond(View v) {
-            super(v);
-            sliderShow = (SliderLayout) v.findViewById(R.id.slider);
-        }
-
-        public SliderLayout getSliderShow() {
-            return sliderShow;
-        }
-    }
-
 
     /**
      * Initialize the dataset of the Adapter.
@@ -103,31 +87,12 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.context = context;
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        if (position == 0) {
-            return 0;
-        } else {
-            return 1;
-        }
-    }
-
     // Create new views (invoked by the layout manager)
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view.
         View v1 = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.card_item, viewGroup, false);
-
-        View v2 = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.slider_item, viewGroup, false);
-
-        switch (viewType) {
-            case VIEW_TYPE_FIRST:
-                return new ViewHolderFirst(v1);
-            case VIEW_TYPE_SECOND:
-                return new ViewHolderSecond(v2);
-        }
 
         return new ViewHolderFirst(v1);
     }
@@ -138,78 +103,14 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         Log.d(TAG, "Element " + position + " set.");
 
-        switch (getItemViewType(position)) {
-            case VIEW_TYPE_FIRST:
-                ViewHolderFirst viewHolderFirst = (ViewHolderFirst) holder;
-                viewHolderFirst.getTextView().setText(mDataSet[position]);
-                Drawable d = context.getResources().getDrawable(logoArrayID[position]);
-                viewHolderFirst.getLogo().setImageDrawable(d);
-                setAnimation(viewHolderFirst.itemView, position);
-                break;
-            case VIEW_TYPE_SECOND:
-                ViewHolderSecond viewHolderSecond = (ViewHolderSecond) holder;
 
-                //calculate slideshow height and width based off screen dimensions and
-                //image size of 1400x500
-                DisplayMetrics displaymetrics = new DisplayMetrics();
-                WindowManager windowManager = (WindowManager) this.context.getSystemService(Context.WINDOW_SERVICE);
-                windowManager.getDefaultDisplay().getMetrics(displaymetrics);
-                int screenHeight = displaymetrics.heightPixels;
-                int screenWidth = displaymetrics.widthPixels;
-                double w = 1.00;
-                int imgWidth = (int) (screenWidth * w);
-                int imgHeight = (int) (imgWidth / 2.8);
+        ViewHolderFirst viewHolderFirst = (ViewHolderFirst) holder;
+        viewHolderFirst.getTextView().setText(mDataSet[position]);
+        Drawable d = context.getResources().getDrawable(logoArrayID[position]);
+        viewHolderFirst.getLogo().setImageDrawable(d);
+        setAnimation(viewHolderFirst.itemView, position);
 
 
-                //set new height and width for slideshow
-                viewHolderSecond.getSliderShow().getLayoutParams().height = imgHeight;
-                viewHolderSecond.getSliderShow().getLayoutParams().width = imgWidth;
-
-
-                //add slides into slideshow
-
-                TextSliderView textSliderView1 = new TextSliderView(context);
-                textSliderView1
-                        .description("Murray Studio")
-                        .image("http://i.imgur.com/m9LupJ3.jpg")
-                        .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
-                            @Override
-                            public void onSliderClick(BaseSliderView baseSliderView) {
-                                Toast.makeText(context, baseSliderView.getDescription().toString() + "", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
-                viewHolderSecond.getSliderShow().addSlider(textSliderView1);
-
-                TextSliderView textSliderView2 = new TextSliderView(context);
-                textSliderView2
-                        .description("Story Studio")
-                        .image("http://i.imgur.com/jcrsUwP.jpg")
-                        .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
-                            @Override
-                            public void onSliderClick(BaseSliderView baseSliderView) {
-                                Toast.makeText(context, baseSliderView.getDescription().toString() + "", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
-                viewHolderSecond.getSliderShow().addSlider(textSliderView2);
-
-                TextSliderView textSliderView3 = new TextSliderView(context);
-                textSliderView3
-                        .description("Risk")
-                        .image("http://i.imgur.com/w4y8ENR.jpg")
-                        .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
-                            @Override
-                            public void onSliderClick(BaseSliderView baseSliderView) {
-                                Toast.makeText(context, baseSliderView.getDescription().toString() + "", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
-                viewHolderSecond.getSliderShow().addSlider(textSliderView3);
-
-                setAnimation(viewHolderSecond.itemView, position);
-                break;
-        }
     }
 
     private void setAnimation(View viewToAnimate, int position) {

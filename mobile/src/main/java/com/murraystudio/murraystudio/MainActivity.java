@@ -8,25 +8,29 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
-public class MainActivity extends ActionBarActivity implements
-        AdapterView.OnItemClickListener {
+public class MainActivity extends ActionBarActivity {
 
     //INSTANCE VARS
     protected DrawerLayout drawerLayout;
@@ -76,6 +80,41 @@ public class MainActivity extends ActionBarActivity implements
         //set up adapter to display nav drawer items
         navAdapter = new NavAdapter(mDataset, this, widthOfNav);
         navRecyclerView.setAdapter(navAdapter);
+
+        final GestureDetector mGestureDetector = new GestureDetector(MainActivity.this, new GestureDetector.SimpleOnGestureListener() {
+
+            @Override public boolean onSingleTapUp(MotionEvent e) {
+                return true;
+            }
+
+        });
+
+
+        navRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
+                View child = recyclerView.findChildViewUnder(motionEvent.getX(), motionEvent.getY());
+
+
+                if (child != null && mGestureDetector.onTouchEvent(motionEvent)) {
+                    drawerLayout.closeDrawers();
+                    Toast.makeText(MainActivity.this, "The Item Clicked is: " + recyclerView.getChildPosition(child), Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+        });
 
         //listView.setAdapter(navAdapter);
         //listView.setOnItemClickListener(this);
@@ -134,26 +173,26 @@ public class MainActivity extends ActionBarActivity implements
         }
     }
 
-    public void onItemClick(AdapterView<?> parent, View view, int position,
+/*    public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
         selectItem(position);
 
-        TextView txtview = ((TextView) view.findViewById(R.id.rowText));
-        txtview.setTypeface(null, Typeface.BOLD);
-    }
+        TextView navCardText = (TextView) view.findViewById(R.id.nav_text);
+        navCardText.setTypeface(null, Typeface.BOLD);
+    }*/
 
-    private void selectItem(int position) {
+/*    private void selectItem(int position) {
         fragment = new Home();
         // FragmentManager fm = getSupportFragmentManager();
 
-/*        switch (position) {
+*//*        switch (position) {
             case 0:
                 fragment = new MadlibsSelect();
                 break;
             case 1:
                 fragment = new MadlibsCreate();
                 break;
-        }*/
+        }*//*
 
 
         FragmentTransaction fm = getSupportFragmentManager()
@@ -167,68 +206,14 @@ public class MainActivity extends ActionBarActivity implements
         }
 
 
-    }
+    }*/
 
     /**
      * Generates Strings for RecyclerView's adapter. This data would usually come
      * from a local content provider or remote server.
      */
     private void initDataset() {
-        mDataset = getResources().getStringArray(R.array.card_titles);
+        mDataset = getResources().getStringArray(R.array.nav_card_titles);
     }
-
-/*    //adapter for nav drawer use
-    class MyAdapter extends BaseAdapter {
-        private Context context;
-        String[] Madlibs;
-        int[] images = {R.drawable.note, R.drawable.pen, R.drawable.stack,
-                R.drawable.settings, R.drawable.user};
-
-        public MyAdapter(Context context) {
-            this.context = context;
-            Madlibs = context.getResources().getStringArray(R.array.Madlibs);
-        }
-
-        @Override
-        public int getCount() {
-            // TODO Auto-generated method stub
-            return Madlibs.length;
-        }
-
-        @Override
-        public Object getItem(int position) {
-            // TODO Auto-generated method stub
-            return Madlibs[position];
-        }
-
-        @Override
-        public long getItemId(int position) {
-            // TODO Auto-generated method stub
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            // TODO Auto-generated method stub
-            View row = null;
-            if (convertView == null) {
-                LayoutInflater inflater = (LayoutInflater) context
-                        .getSystemService(context.LAYOUT_INFLATER_SERVICE);
-                row = inflater.inflate(R.layout.custom_row, parent, false);
-            } else {
-                row = convertView;
-            }
-            TextView titleTextView = (TextView) row.findViewById(R.id.rowText);
-            ImageView titleImageView = (ImageView) row
-                    .findViewById(R.id.imageView1);
-
-            //titleTextView.setTypeface(null, Typeface.BOLD);
-
-            titleTextView.setText(Madlibs[position]);
-            titleImageView.setImageResource(images[position]);
-
-            return row;
-        }
-    }*/
 
 }
