@@ -40,21 +40,21 @@ import org.w3c.dom.Text;
 /**
  * Provide views to RecyclerView with data from mDataSet.
  */
-public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final String TAG = "HomeAdapter";
 
     //holds titles for cards, position 0 contains header placeholder string
     private String[] mDataSet;
     //holds logos for cards, -1 used as header placeholder positon
-    private int[] logoArrayID = {-1, R.drawable.story_studio_logo, R.drawable.murray_studio_logo, R.drawable.graphics_logo};
+    private int[] logoArrayID = {R.drawable.story_studio_logo, R.drawable.risk_logo, R.drawable.murray_studio_logo, R.drawable.graphics_logo};
     // Allows to remember the last item shown on screen
     private int lastPosition = -1;
 
     private Context context;
 
-    //holds ids for types
+/*    //holds ids for types
     private static final int VIEW_TYPE_FIRST = 1;
-    private static final int VIEW_TYPE_SECOND = 0;
+    private static final int VIEW_TYPE_SECOND = 0;*/
 
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
@@ -78,7 +78,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    public static class ViewHolderSecond extends RecyclerView.ViewHolder {
+/*    public static class ViewHolderSecond extends RecyclerView.ViewHolder {
         private final ImageView header;
 
         public ViewHolderSecond(View v) {
@@ -90,7 +90,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return header;
         }
 
-    }
+    }*/
 
 
     /**
@@ -98,7 +98,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
      *
      * @param dataSet String[] containing the data to populate views to be used by RecyclerView.
      */
-    public HomeAdapter(String[] dataSet, Context context) {
+    public ProjectAdapter(String[] dataSet, Context context) {
         mDataSet = dataSet;
         this.context = context;
     }
@@ -108,17 +108,17 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view.
         View v1 = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.card_item, viewGroup, false);
+                .inflate(R.layout.card_item_project, viewGroup, false);
 
         View v2 = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.header, viewGroup, false);
 
-        switch (viewType){
+/*        switch (viewType){
             case VIEW_TYPE_FIRST:
                 return new ViewHolderFirst(v1);
             case VIEW_TYPE_SECOND:
                 return new ViewHolderSecond(v2);
-        }
+        }*/
 
         return new ViewHolderFirst(v1);
     }
@@ -129,15 +129,15 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         Log.d(TAG, "Element " + position + " set.");
 
-        switch (getItemViewType(position)){
-            case VIEW_TYPE_FIRST:
+        //switch (getItemViewType(position)){
+            //case VIEW_TYPE_FIRST:
                 ViewHolderFirst viewHolderFirst = (ViewHolderFirst) holder;
                 viewHolderFirst.getTextView().setText(mDataSet[position]);
                 Drawable d = context.getResources().getDrawable(logoArrayID[position]);
                 viewHolderFirst.getLogo().setImageDrawable(d);
                 setAnimation(viewHolderFirst.itemView, position);
-                break;
-            case VIEW_TYPE_SECOND:
+               // break;
+            /*case VIEW_TYPE_SECOND:
                 ViewHolderSecond viewHolderSecond = (ViewHolderSecond) holder;
 
                 //calculate header height and width based off screen dimensions and
@@ -155,7 +155,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 viewHolderSecond.getHeader().getLayoutParams().height = imgHeight;
                 setAnimation(viewHolderSecond.itemView, position);
                 break;
-        }
+        }*/
     }
 
     private void setAnimation(View viewToAnimate, int position) {
@@ -180,12 +180,12 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return mDataSet.length;
     }
 
-    @Override
+/*    @Override
     public int getItemViewType(int position) {
         if (position == 0) {
             return 0;
         } else {
             return 1;
         }
-    }
+    }*/
 }

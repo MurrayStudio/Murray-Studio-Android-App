@@ -24,13 +24,21 @@
     </string-array>
 
     <string-array name="card_titles">
+        <item>Header Placeholder String</item>
         <item>Projects</item>
         <item>About Me</item>
         <item>Contact</item>
     </string-array>
 
+    <string-array name="card_titles_projects">
+        <item>Story Studio</item>
+        <item>Risk</item>
+        <item>Murray Studio</item>
+        <item>Graphic Design</item>
+    </string-array>
+
     <string-array name="nav_card_titles">
-        <item>Header Placeholder String</item>
+        <item>Slider Placeholder String</item>
         <item>Home</item>
         <item>Projects</item>
         <item>About Me</item>

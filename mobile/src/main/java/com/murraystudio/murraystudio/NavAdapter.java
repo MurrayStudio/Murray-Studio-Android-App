@@ -112,7 +112,7 @@ public class NavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 viewHolderFirst.getNavText().setText(mDataSet[position]);
                 //Drawable d = context.getResources().getDrawable(logoArrayID[position]);
                 //viewHolderFirst.getRowImage().setImageDrawable(d);
-                setAnimation(viewHolderFirst.itemView, position);
+                //setAnimation(viewHolderFirst.itemView, position);
                 break;
             case VIEW_TYPE_SECOND:
                 ViewHolderSecond viewHolderSecond = (ViewHolderSecond) holder;
@@ -176,7 +176,7 @@ public class NavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 viewHolderSecond.getSliderShow().addSlider(defaultSliderView3);
                 viewHolderSecond.getSliderShow().setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Invisible);
 
-                setAnimation(viewHolderSecond.itemView, position);
+                //setAnimation(viewHolderSecond.itemView, position);
                 break;
         }
 
@@ -187,7 +187,7 @@ public class NavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return mDataSet.length;
     }
 
-    private void setAnimation(View viewToAnimate, int position) {
+/*    private void setAnimation(View viewToAnimate, int position) {
 
         // If the bound view wasn't previously displayed on screen, it's animated
         if (position > lastPosition) {
@@ -195,7 +195,7 @@ public class NavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             viewToAnimate.startAnimation(animation);
             lastPosition = position;
         }
-    }
+    }*/
 
     @Override
     public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {

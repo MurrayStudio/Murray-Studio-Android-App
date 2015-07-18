@@ -22,7 +22,7 @@
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="10dp"
         android:clickable="true"
@@ -33,43 +33,76 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical">
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1.3"
-                android:layout_marginLeft="20dp"
+                android:layout_height="90dp"
                 android:gravity="left"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/logo"
-                    android:layout_width="120dp"
+                    android:layout_width="100dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
                     android:paddingBottom="10dp"
                     android:paddingTop="10dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/story_studio_logo" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:gravity="left"
+                        android:text="Projects"
+                        android:textColor="@color/background_material_dark"
+                        android:textSize="30sp" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#44555555" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Create, modify, save, and share stories using Story Studio. Utilizing Android 5.0 material design and animations, this Android app is sure to entertain for hours on both phones and tablets. Video"
+                    android:textColor="@color/background_material_dark"
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="left"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="2dp">
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="Projects"
-                    android:textColor="@color/background_material_dark"
-                    android:textSize="37sp" />
+                <ImageButton
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_media_play"/>
 
             </LinearLayout>
 

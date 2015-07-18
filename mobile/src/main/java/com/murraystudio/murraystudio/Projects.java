@@ -16,7 +16,7 @@ public class Projects extends Fragment {
     android.support.v7.app.ActionBar actionBar;
     //SliderLayout sliderShow;
     protected RecyclerView mRecyclerView;
-    protected HomeAdapter mAdapter;
+    protected ProjectAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
     protected String[] mDataset;
     //private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -46,7 +46,7 @@ public class Projects extends Fragment {
 
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new HomeAdapter(mDataset, getActivity());
+        mAdapter = new ProjectAdapter(mDataset, getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
         //mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
@@ -67,7 +67,7 @@ public class Projects extends Fragment {
      * from a local content provider or remote server.
      */
     private void initDataset() {
-        mDataset = getResources().getStringArray(R.array.card_titles);
+        mDataset = getResources().getStringArray(R.array.card_titles_projects);
     }
 
 
