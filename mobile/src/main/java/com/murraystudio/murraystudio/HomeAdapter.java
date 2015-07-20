@@ -135,7 +135,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 viewHolderFirst.getTextView().setText(mDataSet[position]);
                 Drawable d = context.getResources().getDrawable(logoArrayID[position]);
                 viewHolderFirst.getLogo().setImageDrawable(d);
-                setAnimation(viewHolderFirst.itemView, position);
+                //setAnimation(viewHolderFirst.itemView, position);
                 break;
             case VIEW_TYPE_SECOND:
                 ViewHolderSecond viewHolderSecond = (ViewHolderSecond) holder;
@@ -153,12 +153,12 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
                 viewHolderSecond.getHeader().getLayoutParams().width = imgWidth;
                 viewHolderSecond.getHeader().getLayoutParams().height = imgHeight;
-                setAnimation(viewHolderSecond.itemView, position);
+                //setAnimation(viewHolderSecond.itemView, position);
                 break;
         }
     }
 
-    private void setAnimation(View viewToAnimate, int position) {
+/*    private void setAnimation(View viewToAnimate, int position) {
 
         // If the bound view wasn't previously displayed on screen, it's animated
         if (position > lastPosition) {
@@ -166,7 +166,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             viewToAnimate.startAnimation(animation);
             lastPosition = position;
         }
-    }
+    }*/
 
     @Override
     public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {

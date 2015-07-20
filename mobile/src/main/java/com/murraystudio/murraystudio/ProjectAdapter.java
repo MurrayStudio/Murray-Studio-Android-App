@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,8 +44,10 @@ import org.w3c.dom.Text;
 public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final String TAG = "HomeAdapter";
 
-    //holds titles for cards, position 0 contains header placeholder string
-    private String[] mDataSet;
+    //holds titles for cards
+    private String[] titles;
+    //holds descriptions for cards
+    private String[] descriptions;
     //holds logos for cards, -1 used as header placeholder positon
     private int[] logoArrayID = {R.drawable.story_studio_logo, R.drawable.risk_logo, R.drawable.murray_studio_logo, R.drawable.graphics_logo};
     // Allows to remember the last item shown on screen
@@ -60,17 +63,35 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
      * Provide a reference to the type of views that you are using (custom ViewHolder)
      */
     public static class ViewHolderFirst extends RecyclerView.ViewHolder {
-        private final TextView textView;
+        private final TextView title;
+        private final TextView description;
+        private final ImageButton play;
+        private final ImageButton open;
         private final ImageView logo;
 
         public ViewHolderFirst(View v) {
             super(v);
-            textView = (TextView) v.findViewById(R.id.textView);
-            logo = (ImageView) v.findViewById(R.id.logo);
+            title = (TextView) v.findViewById(R.id.project_title);
+            description = (TextView) v.findViewById(R.id.project_description);
+            play = (ImageButton) v.findViewById(R.id.project_play_button);
+            open = (ImageButton) v.findViewById(R.id.project_open_link_button);
+            logo = (ImageView) v.findViewById(R.id.project_logo);
         }
 
-        public TextView getTextView() {
-            return textView;
+        public TextView getTitle() {
+            return title;
+        }
+
+        public TextView getDescription() {
+            return description;
+        }
+
+        public ImageButton getPlayButton() {
+            return play;
+        }
+
+        public ImageButton getOpenButton() {
+            return open;
         }
 
         public ImageView getLogo() {
@@ -78,28 +99,12 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-/*    public static class ViewHolderSecond extends RecyclerView.ViewHolder {
-        private final ImageView header;
-
-        public ViewHolderSecond(View v) {
-            super(v);
-            header = (ImageView) v.findViewById(R.id.header);
-        }
-
-        public ImageView getHeader(){
-            return header;
-        }
-
-    }*/
-
-
     /**
      * Initialize the dataset of the Adapter.
-     *
-     * @param dataSet String[] containing the data to populate views to be used by RecyclerView.
      */
-    public ProjectAdapter(String[] dataSet, Context context) {
-        mDataSet = dataSet;
+    public ProjectAdapter(String[] titles, String[] descriptions, Context context) {
+        this.titles = titles;
+        this.descriptions = descriptions;
         this.context = context;
     }
 
@@ -110,16 +115,6 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         View v1 = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.card_item_project, viewGroup, false);
 
-        View v2 = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.header, viewGroup, false);
-
-/*        switch (viewType){
-            case VIEW_TYPE_FIRST:
-                return new ViewHolderFirst(v1);
-            case VIEW_TYPE_SECOND:
-                return new ViewHolderSecond(v2);
-        }*/
-
         return new ViewHolderFirst(v1);
     }
 
@@ -128,37 +123,15 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         Log.d(TAG, "Element " + position + " set.");
-
-        //switch (getItemViewType(position)){
-            //case VIEW_TYPE_FIRST:
                 ViewHolderFirst viewHolderFirst = (ViewHolderFirst) holder;
-                viewHolderFirst.getTextView().setText(mDataSet[position]);
+                viewHolderFirst.getTitle().setText(titles[position]);
+                viewHolderFirst.getDescription().setText((descriptions[position]));
                 Drawable d = context.getResources().getDrawable(logoArrayID[position]);
                 viewHolderFirst.getLogo().setImageDrawable(d);
-                setAnimation(viewHolderFirst.itemView, position);
-               // break;
-            /*case VIEW_TYPE_SECOND:
-                ViewHolderSecond viewHolderSecond = (ViewHolderSecond) holder;
-
-                //calculate header height and width based off screen dimensions and
-                //image size of 1400x500
-                DisplayMetrics displaymetrics = new DisplayMetrics();
-                WindowManager windowManager = (WindowManager) this.context.getSystemService(Context.WINDOW_SERVICE);
-                windowManager.getDefaultDisplay().getMetrics(displaymetrics);
-                int screenHeight = displaymetrics.heightPixels;
-                int screenWidth = displaymetrics.widthPixels;
-                double w = 1.00;
-                int imgWidth = (int) (screenWidth * w);
-                int imgHeight = (int) (imgWidth / 2.8);
-
-                viewHolderSecond.getHeader().getLayoutParams().width = imgWidth;
-                viewHolderSecond.getHeader().getLayoutParams().height = imgHeight;
-                setAnimation(viewHolderSecond.itemView, position);
-                break;
-        }*/
+                //setAnimation(viewHolderFirst.itemView, position);
     }
 
-    private void setAnimation(View viewToAnimate, int position) {
+/*    private void setAnimation(View viewToAnimate, int position) {
 
         // If the bound view wasn't previously displayed on screen, it's animated
         if (position > lastPosition) {
@@ -166,7 +139,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             viewToAnimate.startAnimation(animation);
             lastPosition = position;
         }
-    }
+    }*/
 
     @Override
     public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
@@ -177,15 +150,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataSet.length;
+        return titles.length;
     }
 
-/*    @Override
-    public int getItemViewType(int position) {
-        if (position == 0) {
-            return 0;
-        } else {
-            return 1;
-        }
-    }*/
 }

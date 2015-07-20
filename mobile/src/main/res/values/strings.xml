@@ -30,6 +30,13 @@
         <item>Contact</item>
     </string-array>
 
+    <string-array name="project_descriptions">
+        <item>Create, modify, save, and share stories using Story Studio. Utilizing Android 5.0 material design and animations, this Android app is sure to entertain for hours on both phones and tablets.</item>
+        <item>Play the classic board game without the hassle of maintaining board game pieces and rolling the dice over and over. Play with friends over any wifi network or play with a computer.</item>
+        <item>This website utilizes a variety of the latest web development languages to achieve beautiful minimalistic design coupled with smooth animations. Have a look around to learn more about me.</item>
+        <item>Adobe Photoshop certification and a few years of work and personal experience with graphic design has expanded my design portfolio. Take a look at some samples.</item>
+    </string-array>
+
     <string-array name="card_titles_projects">
         <item>Story Studio</item>
         <item>Risk</item>

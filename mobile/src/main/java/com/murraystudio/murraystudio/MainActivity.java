@@ -102,18 +102,39 @@ public class MainActivity extends ActionBarActivity {
                     drawerLayout.closeDrawers();
                     Toast.makeText(MainActivity.this, "The Item Clicked is: " + recyclerView.getChildPosition(child), Toast.LENGTH_SHORT).show();
 
-                    fragment = new Projects();
-
-                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right);
-                    ft.replace(R.id.fragment_container, fragment);
-                    ft.addToBackStack(null);
-                    ft.commit();
-
+                    switch (recyclerView.getChildPosition(child)) {
+                        case 1:
+                            fragment = new Home();
+                            getSupportFragmentManager().beginTransaction()
+                                    .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)
+                                    .replace(R.id.fragment_container, fragment)
+                                    .addToBackStack(null).commit();
+                            break;
+                        case 2:
+                            fragment = new Projects();
+                            getSupportFragmentManager().beginTransaction()
+                                    .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)
+                                    .replace(R.id.fragment_container, fragment)
+                                    .addToBackStack(null).commit();
+                            break;
+                        case 3:
+                            fragment = new Home();
+                            getSupportFragmentManager().beginTransaction()
+                                    .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)
+                                    .replace(R.id.fragment_container, fragment)
+                                    .addToBackStack(null).commit();
+                            break;
+                        case 4:
+                            fragment = new Home();
+                            getSupportFragmentManager().beginTransaction()
+                                    .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)
+                                    .replace(R.id.fragment_container, fragment)
+                                    .addToBackStack(null).commit();
+                            break;
+                    }
 
                     return true;
                 }
-
                 return false;
             }
 
