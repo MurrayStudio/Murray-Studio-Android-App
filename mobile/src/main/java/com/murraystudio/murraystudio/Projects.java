@@ -2,11 +2,13 @@ package com.murraystudio.murraystudio;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 public class Projects extends Fragment {
 
@@ -20,6 +22,7 @@ public class Projects extends Fragment {
     protected RecyclerView.LayoutManager mLayoutManager;
     protected String[] titles;
     protected String[] descriptions;
+    protected CardView cardview;
     //private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override

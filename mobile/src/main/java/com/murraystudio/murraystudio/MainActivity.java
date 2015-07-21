@@ -61,7 +61,6 @@ public class MainActivity extends ActionBarActivity {
         fragmentTrans = getSupportFragmentManager()
                 .beginTransaction();
         fragmentTrans.replace(R.id.fragment_container, fragment);
-        fragmentTrans.addToBackStack(null);
         fragmentTrans.commit();
 
         //init the toolbar for use here and in fragments
@@ -105,31 +104,19 @@ public class MainActivity extends ActionBarActivity {
                     switch (recyclerView.getChildPosition(child)) {
                         case 1:
                             fragment = new Home();
-                            getSupportFragmentManager().beginTransaction()
-                                    .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)
-                                    .replace(R.id.fragment_container, fragment)
-                                    .addToBackStack(null).commit();
+                            switchFragment(fragment);
                             break;
                         case 2:
                             fragment = new Projects();
-                            getSupportFragmentManager().beginTransaction()
-                                    .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)
-                                    .replace(R.id.fragment_container, fragment)
-                                    .addToBackStack(null).commit();
+                            switchFragment(fragment);
                             break;
                         case 3:
                             fragment = new Home();
-                            getSupportFragmentManager().beginTransaction()
-                                    .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)
-                                    .replace(R.id.fragment_container, fragment)
-                                    .addToBackStack(null).commit();
+                            switchFragment(fragment);
                             break;
                         case 4:
                             fragment = new Home();
-                            getSupportFragmentManager().beginTransaction()
-                                    .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)
-                                    .replace(R.id.fragment_container, fragment)
-                                    .addToBackStack(null).commit();
+                            switchFragment(fragment);
                             break;
                     }
 
@@ -148,9 +135,6 @@ public class MainActivity extends ActionBarActivity {
 
             }
         });
-
-        //listView.setAdapter(navAdapter);
-        //listView.setOnItemClickListener(this);
 
         if (drawerLayout != null) {
             drawerListener = new ActionBarDrawerToggle(this, drawerLayout, mToolbar,
@@ -247,6 +231,14 @@ public class MainActivity extends ActionBarActivity {
      */
     private void initDataset() {
         mDataset = getResources().getStringArray(R.array.nav_card_titles);
+    }
+
+    public void switchFragment(Fragment fragment) {
+        this.fragment = fragment;
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)
+                .replace(R.id.fragment_container, this.fragment)
+                .addToBackStack(null).commit();
     }
 
 }

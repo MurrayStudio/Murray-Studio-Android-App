@@ -4,9 +4,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 public class Home extends Fragment {
 
@@ -19,6 +22,7 @@ public class Home extends Fragment {
     protected HomeAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
     protected String[] mDataset;
+    private Fragment fragment;
     //private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
@@ -48,6 +52,64 @@ public class Home extends Fragment {
 
         mAdapter = new HomeAdapter(mDataset, getActivity());
         mRecyclerView.setAdapter(mAdapter);
+
+        final GestureDetector mGestureDetector = new GestureDetector(getActivity(), new GestureDetector.SimpleOnGestureListener() {
+
+            @Override public boolean onSingleTapUp(MotionEvent e) {
+                return true;
+            }
+
+        });
+
+
+        mRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
+                View child = recyclerView.findChildViewUnder(motionEvent.getX(), motionEvent.getY());
+
+
+                if (child != null && mGestureDetector.onTouchEvent(motionEvent)) {
+                    Toast.makeText(getActivity(), "The Item Clicked is: " + recyclerView.getChildPosition(child), Toast.LENGTH_SHORT).show();
+
+                        switch (recyclerView.getChildPosition(child)) {
+                        case 1:
+                            fragment = new Projects();
+                            getActivity().getSupportFragmentManager().beginTransaction()
+                                    .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)
+                                    .replace(R.id.fragment_container, fragment)
+                                    .addToBackStack(null).commit();
+                            break;
+                        case 2:
+                            fragment = new Home();
+                            getActivity().getSupportFragmentManager().beginTransaction()
+                                    .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)
+                                    .replace(R.id.fragment_container, fragment)
+                                    .addToBackStack(null).commit();
+                            break;
+                        case 3:
+                            fragment = new Home();
+                            getActivity().getSupportFragmentManager().beginTransaction()
+                                    .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)
+                                    .replace(R.id.fragment_container, fragment)
+                                    .addToBackStack(null).commit();
+                            break;
+                    }
+
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+        });
 
         //mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
 

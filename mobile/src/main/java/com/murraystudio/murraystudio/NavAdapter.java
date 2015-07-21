@@ -34,7 +34,7 @@ public class NavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private String[] mDataSet;
 
     //holds logos for cards, -1 used as header placeholder positon
-    //private int[] logoArrayID = {-1, R.drawable.story_studio_logo, R.drawable.murray_studio_logo, R.drawable.graphics_logo};
+    private int[] logoArrayID = {-1, R.drawable.home, R.drawable.project, R.drawable.people, R.drawable.contact};
 
     // Allows to remember the last item shown on screen
     private int lastPosition = -1;
@@ -52,15 +52,21 @@ public class NavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
      */
     public static class ViewHolderFirst extends RecyclerView.ViewHolder {
         private final TextView navText;
+        private final ImageView logo;
 
         public ViewHolderFirst(View v) {
             super(v);
             navText = (TextView) v.findViewById(R.id.nav_text);
+            logo = (ImageView) v.findViewById(R.id.nav_logo);
             //rowImage = (ImageView) v.findViewById(R.id.rowImage);
         }
 
         public TextView getNavText() {
             return navText;
+        }
+
+        public ImageView getNavLogo() {
+            return logo;
         }
     }
 
@@ -110,8 +116,8 @@ public class NavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case VIEW_TYPE_FIRST:
                 ViewHolderFirst viewHolderFirst = (ViewHolderFirst) holder;
                 viewHolderFirst.getNavText().setText(mDataSet[position]);
-                //Drawable d = context.getResources().getDrawable(logoArrayID[position]);
-                //viewHolderFirst.getRowImage().setImageDrawable(d);
+                Drawable d = context.getResources().getDrawable(logoArrayID[position]);
+                viewHolderFirst.getNavLogo().setImageDrawable(d);
                 //setAnimation(viewHolderFirst.itemView, position);
                 break;
             case VIEW_TYPE_SECOND:
