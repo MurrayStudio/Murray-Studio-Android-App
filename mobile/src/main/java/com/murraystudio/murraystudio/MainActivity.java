@@ -56,7 +56,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         initDataset();
 
-        //load home fragment on creation
+        //load recycler_view fragment on creation
         fragment = new Home();
         fragmentTrans = getSupportFragmentManager()
                 .beginTransaction();
@@ -234,11 +234,12 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void switchFragment(Fragment fragment) {
-        this.fragment = fragment;
-        getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)
-                .replace(R.id.fragment_container, this.fragment)
-                .addToBackStack(null).commit();
-    }
+            this.fragment = fragment;
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)
+                    .replace(R.id.fragment_container, this.fragment)
+                    .addToBackStack(null).commit();
+        }
 
 }

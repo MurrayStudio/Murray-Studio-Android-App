@@ -1,15 +1,21 @@
 package com.murraystudio.murraystudio;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-public class Projects extends Fragment {
+public class Gallery extends Fragment {
 
     private static final String KEY_LAYOUT_MANAGER = "layoutManager";
     private static final int DATASET_COUNT = 60;
@@ -45,7 +51,7 @@ public class Projects extends Fragment {
         actionBar.setTitle("Murray Studio");
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        mLayoutManager = new LinearLayoutManager(getActivity());
+        mLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
 
@@ -130,7 +136,6 @@ public class Projects extends Fragment {
         titles = getResources().getStringArray(R.array.card_titles_projects);
         descriptions = getResources().getStringArray(R.array.project_descriptions);
     }
-
 
 /* used for refresh swipe
 

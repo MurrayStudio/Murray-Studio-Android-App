@@ -16,27 +16,23 @@
 
 package com.murraystudio.murraystudio;
 
+import android.support.v4.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
-
-import org.w3c.dom.Text;
 
 /**
  * Provide views to RecyclerView with data from mDataSet.
@@ -62,20 +58,35 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
      */
-    public static class ViewHolderFirst extends RecyclerView.ViewHolder {
+    public static class ViewHolderFirst extends RecyclerView.ViewHolder implements View.OnClickListener{
         private final TextView title;
         private final TextView description;
         private final ImageButton play;
         private final ImageButton open;
         private final ImageView logo;
+        private final CardView card;
+        private Context context;
+        private Intent browserIntent;
+        private String[] infoUrls;
+        private String[] mediaUrls;
 
-        public ViewHolderFirst(View v) {
+
+        public ViewHolderFirst(View v, Context c) {
             super(v);
+            context = c;
             title = (TextView) v.findViewById(R.id.project_title);
             description = (TextView) v.findViewById(R.id.project_description);
             play = (ImageButton) v.findViewById(R.id.project_play_button);
             open = (ImageButton) v.findViewById(R.id.project_open_link_button);
             logo = (ImageView) v.findViewById(R.id.project_logo);
+            card = (CardView) v.findViewById(R.id.card_view_project);
+
+            play.setOnClickListener(this);
+            open.setOnClickListener(this);
+            card.setOnClickListener(this);
+
+            infoUrls = context.getResources().getStringArray(R.array.info_urls);
+            mediaUrls = context.getResources().getStringArray(R.array.media_urls);
         }
 
         public TextView getTitle() {
@@ -97,6 +108,42 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         public ImageView getLogo() {
             return logo;
         }
+
+        public CardView getCard() {
+            return card;
+        }
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.project_play_button:
+                    Log.i("media url", mediaUrls[ViewHolderFirst.this.getAdapterPosition()]);
+
+                    if(ViewHolderFirst.this.getAdapterPosition() <= 2) {
+                        browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mediaUrls[ViewHolderFirst.this.getAdapterPosition()].toString()));
+                        context.startActivity(browserIntent);
+                    }
+                    else{
+                        Fragment gallery = new Gallery();
+                        FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
+                        ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)
+                                .replace(R.id.fragment_container, gallery)
+                                .addToBackStack(null).commit();
+                    }
+                    break;
+                case R.id.project_open_link_button:
+
+                   //future location to place murray studio urls
+
+                    break;
+                case R.id.card_view_project:
+                    Log.i("project url", infoUrls[ViewHolderFirst.this.getAdapterPosition()]);
+
+                    browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(infoUrls[ViewHolderFirst.this.getAdapterPosition()].toString()));
+                    context.startActivity(browserIntent);
+                    break;
+            }
+        }
     }
 
     /**
@@ -115,20 +162,19 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         View v1 = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.card_item_project, viewGroup, false);
 
-        return new ViewHolderFirst(v1);
+        return new ViewHolderFirst(v1, context);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
         Log.d(TAG, "Element " + position + " set.");
-                ViewHolderFirst viewHolderFirst = (ViewHolderFirst) holder;
-                viewHolderFirst.getTitle().setText(titles[position]);
-                viewHolderFirst.getDescription().setText((descriptions[position]));
-                Drawable d = context.getResources().getDrawable(logoArrayID[position]);
-                viewHolderFirst.getLogo().setImageDrawable(d);
-                //setAnimation(viewHolderFirst.itemView, position);
+        ViewHolderFirst viewHolderFirst = (ViewHolderFirst) holder;
+        viewHolderFirst.getTitle().setText(titles[position]);
+        viewHolderFirst.getDescription().setText((descriptions[position]));
+        Drawable d = context.getResources().getDrawable(logoArrayID[position]);
+        viewHolderFirst.getLogo().setImageDrawable(d);
+        //setAnimation(viewHolderFirst.itemView, position);
     }
 
 /*    private void setAnimation(View viewToAnimate, int position) {

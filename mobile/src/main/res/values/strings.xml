@@ -51,4 +51,18 @@
         <item>About Me</item>
         <item>Contact</item>
     </string-array>
+
+    <string-array name="info_urls">
+        <item>https://github.com/shamu11/Story-Studio-Pro</item>
+        <item>https://github.com/shamu11/RiskProj</item>
+        <item>https://github.com/shamu11/Murray-Studio</item>
+        <item>http://imgur.com/a/NwODz</item>
+    </string-array>
+
+    <string-array name="media_urls">
+        <item>https://www.youtube.com/watch?v=0aGEfgc-haQ</item>
+        <item>https://github.com/shamu11/RiskProj</item>
+        <item>https://github.com/shamu11/Murray-Studio</item>
+        <item>http://imgur.com/a/NwODz</item>
+    </string-array>
 </resources>
