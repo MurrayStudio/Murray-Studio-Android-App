@@ -44,7 +44,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private String[] titles;
     //holds descriptions for cards
     private String[] descriptions;
-    //holds logos for cards, -1 used as header placeholder positon
+    //holds logos for cards
     private int[] logoArrayID = {R.drawable.story_studio_logo, R.drawable.risk_logo, R.drawable.murray_studio_logo, R.drawable.graphics_logo};
     // Allows to remember the last item shown on screen
     private int lastPosition = -1;

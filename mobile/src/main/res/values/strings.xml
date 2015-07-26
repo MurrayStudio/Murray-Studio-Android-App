@@ -65,4 +65,25 @@
         <item>https://github.com/shamu11/Murray-Studio</item>
         <item>http://imgur.com/a/NwODz</item>
     </string-array>
+
+    <string-array name="image_urls">
+        <item>http://i.imgur.com/gLdTscu.jpg</item>
+        <item>http://i.imgur.com/x2jcjPa.jpg</item>
+        <item>http://i.imgur.com/4KQTQKN.jpg</item>
+        <item>http://i.imgur.com/wMwT5uA.jpg</item>
+        <item>http://i.imgur.com/XSWrEGy.jpg</item>
+        <item>http://i.imgur.com/41yTKQ0.jpg</item>
+        <item>http://i.imgur.com/KraSGXE.jpg</item>
+        <item>http://i.imgur.com/4X9mWe3.jpg</item>
+        <item>http://i.imgur.com/Y4oBMMk.jpg</item>
+        <item>http://i.imgur.com/9mcWNOk.jpg</item>
+        <item>http://i.imgur.com/wxcIllb.jpg</item>
+        <item>http://i.imgur.com/0aE4mn2.jpg</item>
+        <item>http://i.imgur.com/VMEiDVZ.jpg</item>
+        <item>http://i.imgur.com/zjmzAsM.jpg</item>
+        <item>http://i.imgur.com/Ow3p5SG.jpg</item>
+        <item>http://i.imgur.com/8yGwY0t.jpg</item>
+        <item>http://i.imgur.com/x9XBOVI.jpg</item>
+        <item>http://i.imgur.com/ivf59Tx.jpg</item>
+    </string-array>
 </resources>

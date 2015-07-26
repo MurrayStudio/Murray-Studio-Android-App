@@ -23,10 +23,9 @@ public class Gallery extends Fragment {
     android.support.v7.app.ActionBar actionBar;
     //SliderLayout sliderShow;
     protected RecyclerView mRecyclerView;
-    protected ProjectAdapter mAdapter;
+    protected GalleryAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
-    protected String[] titles;
-    protected String[] descriptions;
+    private String[] imageURLS;
     protected CardView cardview;
     //private SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -51,11 +50,11 @@ public class Gallery extends Fragment {
         actionBar.setTitle("Murray Studio");
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        mLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+        mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new ProjectAdapter(titles, descriptions, getActivity());
+        mAdapter = new GalleryAdapter(imageURLS, getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
 /*        final GestureDetector mGestureDetector = new GestureDetector(getActivity(), new GestureDetector.SimpleOnGestureListener() {
@@ -133,8 +132,7 @@ public class Gallery extends Fragment {
      * from a local content provider or remote server.
      */
     private void initDataset() {
-        titles = getResources().getStringArray(R.array.card_titles_projects);
-        descriptions = getResources().getStringArray(R.array.project_descriptions);
+        imageURLS = getResources().getStringArray(R.array.image_urls);
     }
 
 /* used for refresh swipe
