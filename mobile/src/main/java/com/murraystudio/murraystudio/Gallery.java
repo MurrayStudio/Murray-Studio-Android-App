@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class Gallery extends Fragment {
@@ -43,7 +44,6 @@ public class Gallery extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.recycler_view, container, false);
-
 
         actionBar = (android.support.v7.app.ActionBar) ((MainActivity) getActivity())
                 .getSupportActionBar();

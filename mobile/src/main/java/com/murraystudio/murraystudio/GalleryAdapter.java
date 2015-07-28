@@ -16,6 +16,8 @@
 
 package com.murraystudio.murraystudio;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -34,6 +36,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+import com.squareup.picasso.Transformation;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Provide views to RecyclerView with data from mDataSet.
  */
@@ -48,6 +58,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private String[] imageURLS;
 
     private Context context;
+
+    private  ViewHolderFirst viewHolderFirst;
 
 /*    //holds ids for types
     private static final int VIEW_TYPE_FIRST = 1;
@@ -107,10 +119,26 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Log.d(TAG, "Element " + position + " set.");
-        ViewHolderFirst viewHolderFirst = (ViewHolderFirst) holder;
+        viewHolderFirst = (ViewHolderFirst) holder;
         //setAnimation(viewHolderFirst.itemView, position);
-        ImageDownloader imageDownLoader = new ImageDownloader(viewHolderFirst.getImageButton());
-        imageDownLoader.execute(imageURLS[position]);
+
+        Picasso.with(context).load(imageURLS[position]).resize(250, 0).into(viewHolderFirst.getImageButton());
+
+/*        Bitmap bitmap = null;
+        try {
+            bitmap = Picasso.with(context).load(imageURLS[position]).get();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        int ratio = calculateInSampleSize(width, height, 150, 150);
+        width = width/ratio;
+        height = height/ratio;
+        bitmap.setWidth(width);
+        bitmap.setHeight(height);
+
+        Picasso.with(context).load(imageURLS[position]).into(viewHolderFirst.getImageButton());*/
     }
 
 /*    private void setAnimation(View viewToAnimate, int position) {
@@ -133,6 +161,29 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public int getItemCount() {
         return imageURLS.length;
+    }
+
+    private static int calculateInSampleSize(
+            int enteredWidth, int enteredHeight, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = enteredHeight;
+        final int width = enteredWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) > reqHeight
+                    && (halfWidth / inSampleSize) > reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
     }
 
 }

@@ -86,6 +86,7 @@ public class NavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public NavAdapter (String[] dataSet, Context context, int widthOfNav){
         mDataSet = dataSet;
         this.context = context;
+        //use width of relative layout nav is in
         this.widthOfNav = widthOfNav;
     }
 

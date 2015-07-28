@@ -5,9 +5,10 @@
 
     <ImageButton
         android:id="@+id/image_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/murray_studio_banner"
-        android:scaleType="fitCenter"/>
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true" />
 
 </LinearLayout>
