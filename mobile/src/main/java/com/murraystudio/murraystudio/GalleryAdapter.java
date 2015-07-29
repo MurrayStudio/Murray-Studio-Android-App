@@ -18,11 +18,11 @@ package com.murraystudio.murraystudio;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
@@ -31,11 +31,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.squareup.picasso.Transformation;
@@ -71,29 +75,34 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public static class ViewHolderFirst extends RecyclerView.ViewHolder implements View.OnClickListener{
         private ImageButton imageButton;
         private Context context;
-        private Intent browserIntent;
-        private String[] imageURLS;
+        private ProgressBar progressBar;
 
 
         public ViewHolderFirst(View v, Context c) {
             super(v);
             context = c;
+            progressBar = (ProgressBar) v.findViewById(R.id.progressBar);
             imageButton = (ImageButton) v.findViewById(R.id.image_button);
-
             imageButton.setOnClickListener(this);
-
-            imageURLS = context.getResources().getStringArray(R.array.image_urls);
         }
 
         public ImageButton getImageButton() {
             return imageButton;
         }
+        public ProgressBar getProgressBar() {
+            return progressBar;
+        }
 
         @Override
         public void onClick(View v) {
+            MainActivity main = new MainActivity();
+            main.setCurrentImagePositon(ViewHolderFirst.this.getAdapterPosition());
 
-
-
+            Fragment galleryImage = new GalleryImageFullScreen();
+            FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
+            ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)
+                    .replace(R.id.fragment_container, galleryImage)
+                    .addToBackStack(null).commit();
         }
     }
 
@@ -120,36 +129,23 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Log.d(TAG, "Element " + position + " set.");
         viewHolderFirst = (ViewHolderFirst) holder;
-        //setAnimation(viewHolderFirst.itemView, position);
 
-        Picasso.with(context).load(imageURLS[position]).resize(250, 0).into(viewHolderFirst.getImageButton());
+        viewHolderFirst.getProgressBar().setVisibility(View.VISIBLE);
+        viewHolderFirst.getImageButton().setVisibility(View.GONE);
 
-/*        Bitmap bitmap = null;
-        try {
-            bitmap = Picasso.with(context).load(imageURLS[position]).get();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        int width = bitmap.getWidth();
-        int height = bitmap.getHeight();
-        int ratio = calculateInSampleSize(width, height, 150, 150);
-        width = width/ratio;
-        height = height/ratio;
-        bitmap.setWidth(width);
-        bitmap.setHeight(height);
-
-        Picasso.with(context).load(imageURLS[position]).into(viewHolderFirst.getImageButton());*/
+        Picasso.with(context)
+                .load(imageURLS[position])
+                .resize(300, 0)
+                .into(viewHolderFirst.getImageButton(), new ImageLoadedCallback(viewHolderFirst.getProgressBar(), viewHolderFirst.getImageButton()) {
+                    @Override
+                    public void onSuccess() {
+                        if (this.progressBar != null) {
+                            this.progressBar.setVisibility(View.GONE);
+                            this.imageBtn.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
     }
-
-/*    private void setAnimation(View viewToAnimate, int position) {
-
-        // If the bound view wasn't previously displayed on screen, it's animated
-        if (position > lastPosition) {
-            Animation animation = AnimationUtils.loadAnimation(context, R.anim.push_up);
-            viewToAnimate.startAnimation(animation);
-            lastPosition = position;
-        }
-    }*/
 
     @Override
     public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
@@ -184,6 +180,26 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
 
         return inSampleSize;
+    }
+
+    private class ImageLoadedCallback implements Callback {
+        ProgressBar progressBar;
+        ImageButton imageBtn;
+
+        public  ImageLoadedCallback(ProgressBar progBar, ImageButton image){
+            progressBar = progBar;
+            imageBtn = image;
+        }
+
+        @Override
+        public void onSuccess() {
+
+        }
+
+        @Override
+        public void onError() {
+
+        }
     }
 
 }

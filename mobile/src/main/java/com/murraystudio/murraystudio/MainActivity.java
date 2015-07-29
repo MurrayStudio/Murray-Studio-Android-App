@@ -37,7 +37,6 @@ public class MainActivity extends ActionBarActivity {
 
     //INSTANCE VARS
     protected DrawerLayout drawerLayout;
-    private FrameLayout frameLayout;
     private NavAdapter navAdapter;
     protected RecyclerView navRecyclerView;
     protected RecyclerView.LayoutManager navLayoutManager;
@@ -45,6 +44,9 @@ public class MainActivity extends ActionBarActivity {
     private Fragment fragment;
     private FragmentTransaction fragmentTrans;
     protected String[] mDataset;
+
+    //holds current gallery image selected
+    private static int position;
 
     //used to get width of relative layout for use in slidershow
     private RelativeLayout navRelative;
@@ -56,20 +58,24 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         initDataset();
 
-        //load recycler_view fragment on creation
-        fragment = new Home();
-        fragmentTrans = getSupportFragmentManager()
-                .beginTransaction();
-        fragmentTrans.replace(R.id.fragment_container, fragment);
-        fragmentTrans.commit();
+        if(savedInstanceState == null) {
+            //load recycler_view fragment on creation
+            fragment = new Home();
+            fragmentTrans = getSupportFragmentManager()
+                    .beginTransaction();
+            fragmentTrans.replace(R.id.fragment_container, fragment);
+            fragmentTrans.commit();
+        }
 
         //init the toolbar for use here and in fragments
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
+        //sets default gallery positon to 0
+        position = 0;
+
         //init layouts
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        frameLayout = (FrameLayout) findViewById(R.id.fragment_container);
 
         navRelative = (RelativeLayout) findViewById(R.id.drawerView);
         widthOfNav = navRelative.getLayoutParams().width;
@@ -190,41 +196,6 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-/*    public void onItemClick(AdapterView<?> parent, View view, int position,
-                            long id) {
-        selectItem(position);
-
-        TextView navCardText = (TextView) view.findViewById(R.id.nav_text);
-        navCardText.setTypeface(null, Typeface.BOLD);
-    }*/
-
-/*    private void selectItem(int position) {
-        fragment = new Home();
-        // FragmentManager fm = getSupportFragmentManager();
-
-*//*        switch (position) {
-            case 0:
-                fragment = new MadlibsSelect();
-                break;
-            case 1:
-                fragment = new MadlibsCreate();
-                break;
-        }*//*
-
-
-        FragmentTransaction fm = getSupportFragmentManager()
-                .beginTransaction();
-        fm.replace(R.id.fragment_container, fragment);
-        fm.addToBackStack(null);
-        fm.commit();
-
-        if (drawerLayout != null) {
-            drawerLayout.closeDrawers();
-        }
-
-
-    }*/
-
     /**
      * Generates Strings for RecyclerView's adapter. This data would usually come
      * from a local content provider or remote server.
@@ -241,5 +212,13 @@ public class MainActivity extends ActionBarActivity {
                     .replace(R.id.fragment_container, this.fragment)
                     .addToBackStack(null).commit();
         }
+
+    public void setCurrentImagePositon(int currentPositon){
+        this.position = currentPositon;
+    }
+
+    public int getCurrentImagePosition(){
+        return this.position;
+    }
 
 }

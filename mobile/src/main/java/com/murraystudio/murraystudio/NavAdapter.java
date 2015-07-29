@@ -142,7 +142,6 @@ public class NavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
                 //add slides into slideshow
-
                 DefaultSliderView defaultSliderView1 = new DefaultSliderView(context);
                 defaultSliderView1
                         .description("Murray Studio")
