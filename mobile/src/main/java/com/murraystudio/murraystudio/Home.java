@@ -80,14 +80,14 @@ public class Home extends Fragment {
                                     .addToBackStack(null).commit();
                             break;
                         case 2:
-                            fragment = new Home();
+                            fragment = new AboutMe();
                             getActivity().getSupportFragmentManager().beginTransaction()
                                     .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)
                                     .replace(R.id.fragment_container, fragment)
                                     .addToBackStack(null).commit();
                             break;
                         case 3:
-                            fragment = new Home();
+                            fragment = new Contact();
                             getActivity().getSupportFragmentManager().beginTransaction()
                                     .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)
                                     .replace(R.id.fragment_container, fragment)

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/nameField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:met_hideUnderline="true"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="Your Name"
+            android:inputType="textPersonName"
+            app:met_floatingLabel="normal" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/emailField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:met_hideUnderline="true"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="Your Email"
+            android:inputType="textPersonName"
+            app:met_floatingLabel="normal" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/messageField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:met_hideUnderline="true"
+            android:gravity="center"
+            android:layout_margin="20dp"
+            android:ems="10"
+            android:hint="Message"
+            android:inputType="textMultiLine"
+            app:met_floatingLabel="normal" />
+
+        <!--    <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"/>-->
+
+    </LinearLayout>
+</LinearLayout>

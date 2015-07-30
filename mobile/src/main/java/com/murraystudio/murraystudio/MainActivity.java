@@ -117,11 +117,11 @@ public class MainActivity extends ActionBarActivity {
                             switchFragment(fragment);
                             break;
                         case 3:
-                            fragment = new Home();
+                            fragment = new AboutMe();
                             switchFragment(fragment);
                             break;
                         case 4:
-                            fragment = new Home();
+                            fragment = new Contact();
                             switchFragment(fragment);
                             break;
                     }

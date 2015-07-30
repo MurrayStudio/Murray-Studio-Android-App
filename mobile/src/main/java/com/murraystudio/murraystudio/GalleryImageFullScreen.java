@@ -52,7 +52,7 @@ public class GalleryImageFullScreen extends Fragment {
 
         for(int i = 0; i < imageURLs.length; i++){
             DefaultSliderView slide = new DefaultSliderView(getActivity());
-            slide.image(imageURLs[i]).setScaleType(BaseSliderView.ScaleType.Fit);
+            slide.image(imageURLs[i]);
             slide.setScaleType(BaseSliderView.ScaleType.CenterInside);
             slides.add(slide);
             imageSlide.addSlider(slide);

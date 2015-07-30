@@ -86,4 +86,8 @@
         <item>http://i.imgur.com/x9XBOVI.jpg</item>
         <item>http://i.imgur.com/ivf59Tx.jpg</item>
     </string-array>
+
+    <string name="about_me_title">Shamus Murray</string>
+    <string name="about_me_description">I have a passion for tinkering and learning new technologies as an individual and I thrive off collaborative work environments where many fresh ideas are passed around. Although time is important, quality in the form of perfecting details small and large are a very important part of any project for me.</string>
+
 </resources>
