@@ -15,10 +15,13 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 public class Contact extends Fragment {
 
@@ -26,6 +29,10 @@ public class Contact extends Fragment {
     private static final int DATASET_COUNT = 60;
 
     android.support.v7.app.ActionBar actionBar;
+    private MaterialEditText nameField;
+    private MaterialEditText subjectField;
+    private MaterialEditText messageField;
+    private Button sendButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +52,21 @@ public class Contact extends Fragment {
                 .getSupportActionBar();
         actionBar.setTitle("Contact");
 
+        nameField = (MaterialEditText) view.findViewById(R.id.nameField);
+        subjectField = (MaterialEditText) view.findViewById(R.id.subjectField);
+        messageField = (MaterialEditText) view.findViewById(R.id.messageField);
+        sendButton = (Button) view.findViewById(R.id.sendButton);
+
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                        "mailto","s.murray.studio@gmail.com", null));
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject: " + subjectField.getText().toString() + ". From: " + nameField.getText().toString());
+                emailIntent.putExtra(Intent.EXTRA_TEXT, messageField.getText().toString());
+                startActivity(Intent.createChooser(emailIntent, "Send email..."));
+            }
+        });
 
         return view;
     }
