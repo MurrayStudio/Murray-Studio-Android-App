@@ -42,7 +42,7 @@ public class Projects extends Fragment {
 
         actionBar = (android.support.v7.app.ActionBar) ((MainActivity) getActivity())
                 .getSupportActionBar();
-        actionBar.setTitle("Murray Studio");
+        actionBar.setTitle("Projects");
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         mLayoutManager = new LinearLayoutManager(getActivity());

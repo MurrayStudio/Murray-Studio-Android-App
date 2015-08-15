@@ -21,7 +21,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -31,9 +34,11 @@ import android.os.Message;
 import android.support.wearable.watchface.CanvasWatchFaceService;
 import android.support.wearable.watchface.WatchFaceStyle;
 import android.text.format.Time;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.WindowInsets;
 
+import java.util.Date;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
@@ -41,7 +46,7 @@ import java.util.concurrent.TimeUnit;
  * Digital watch face with seconds. In ambient mode, the seconds aren't displayed. On devices with
  * low-bit ambient mode, the text is drawn without anti-aliasing in ambient mode.
  */
-public class MurrayStudio extends CanvasWatchFaceService {
+public class MurrayStudioWatchFace extends CanvasWatchFaceService {
     private static final Typeface NORMAL_TYPEFACE =
             Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL);
 
@@ -90,7 +95,19 @@ public class MurrayStudio extends CanvasWatchFaceService {
         boolean mRegisteredTimeZoneReceiver = false;
 
         Paint mBackgroundPaint;
+        private Paint mHandPaint;
+
         Paint mTextPaint;
+        final private float textSize = 17;
+        private float widthOfDate;
+        private String date;
+        private String month;
+
+        private Bitmap bitmapBackground;
+
+        private static final float STROKE_WIDTH = 2f;
+        private static final float HAND_END_CAP_RADIUS = 6f;
+        private static final int SHADOW_RADIUS = 2;
 
         boolean mAmbient;
 
@@ -98,6 +115,15 @@ public class MurrayStudio extends CanvasWatchFaceService {
 
         float mXOffset;
         float mYOffset;
+
+        private float mHourHandLength;
+        private float mMinuteHandLength;
+        private float mSecondHandLength;
+
+        private int mWidth;
+        private int mHeight;
+        private float mCenterX;
+        private float mCenterY;
 
         /**
          * Whether the display supports fewer bits for each color in ambient mode. When true, we
@@ -109,19 +135,33 @@ public class MurrayStudio extends CanvasWatchFaceService {
         public void onCreate(SurfaceHolder holder) {
             super.onCreate(holder);
 
-            setWatchFaceStyle(new WatchFaceStyle.Builder(MurrayStudio.this)
+            setWatchFaceStyle(new WatchFaceStyle.Builder(MurrayStudioWatchFace.this)
                     .setCardPeekMode(WatchFaceStyle.PEEK_MODE_VARIABLE)
                     .setBackgroundVisibility(WatchFaceStyle.BACKGROUND_VISIBILITY_INTERRUPTIVE)
                     .setShowSystemUiTime(false)
                     .build());
-            Resources resources = MurrayStudio.this.getResources();
+            Resources resources = MurrayStudioWatchFace.this.getResources();
             mYOffset = resources.getDimension(R.dimen.digital_y_offset);
 
             mBackgroundPaint = new Paint();
             mBackgroundPaint.setColor(resources.getColor(R.color.digital_background));
 
+            bitmapBackground = BitmapFactory.decodeResource(getResources(), R.drawable.murray_studio_background);
+
+
+            mHandPaint = new Paint();
+            mHandPaint.setColor(Color.parseColor("#f46902"));
+            mHandPaint.setStrokeWidth(STROKE_WIDTH);
+            mHandPaint.setAntiAlias(true);
+            mHandPaint.setStrokeCap(Paint.Cap.ROUND);
+            mHandPaint.setShadowLayer(SHADOW_RADIUS, 0, 0, Color.parseColor("#f5a301"));
+            mHandPaint.setStyle(Paint.Style.STROKE);
+
+
             mTextPaint = new Paint();
             mTextPaint = createTextPaint(resources.getColor(R.color.digital_text));
+            mTextPaint.setShadowLayer(1.5f, 0, 0, Color.GRAY);
+            mTextPaint.setTextSize(textSize);
 
             mTime = new Time();
         }
@@ -165,7 +205,7 @@ public class MurrayStudio extends CanvasWatchFaceService {
             }
             mRegisteredTimeZoneReceiver = true;
             IntentFilter filter = new IntentFilter(Intent.ACTION_TIMEZONE_CHANGED);
-            MurrayStudio.this.registerReceiver(mTimeZoneReceiver, filter);
+            MurrayStudioWatchFace.this.registerReceiver(mTimeZoneReceiver, filter);
         }
 
         private void unregisterReceiver() {
@@ -173,7 +213,7 @@ public class MurrayStudio extends CanvasWatchFaceService {
                 return;
             }
             mRegisteredTimeZoneReceiver = false;
-            MurrayStudio.this.unregisterReceiver(mTimeZoneReceiver);
+            MurrayStudioWatchFace.this.unregisterReceiver(mTimeZoneReceiver);
         }
 
         @Override
@@ -181,14 +221,39 @@ public class MurrayStudio extends CanvasWatchFaceService {
             super.onApplyWindowInsets(insets);
 
             // Load resources that have alternate values for round watches.
-            Resources resources = MurrayStudio.this.getResources();
-            boolean isRound = insets.isRound();
-            mXOffset = resources.getDimension(isRound
-                    ? R.dimen.digital_x_offset_round : R.dimen.digital_x_offset);
-            float textSize = resources.getDimension(isRound
-                    ? R.dimen.digital_text_size_round : R.dimen.digital_text_size);
+//            Resources resources = MurrayStudio.this.getResources();
+//            boolean isRound = insets.isRound();
+//            mXOffset = resources.getDimension(isRound
+//                    ? R.dimen.digital_x_offset_round : R.dimen.digital_x_offset);
+//            float textSize = resources.getDimension(isRound
+//                    ? R.dimen.digital_text_size_round : R.dimen.digital_text_size);
+        }
 
-            mTextPaint.setTextSize(textSize);
+        @Override
+        public void onSurfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+            super.onSurfaceChanged(holder, format, width, height);
+            mWidth = width;
+            mHeight = height;
+            /*
+             * Find the coordinates of the center point on the screen.
+             * Ignore the window insets so that, on round watches
+             * with a "chin", the watch face is centered on the entire screen,
+             * not just the usable portion.
+             */
+            mCenterX = mWidth / 2f;
+            mCenterY = mHeight / 2f;
+
+            /*
+             * Calculate the lengths of the watch hands and store them in member variables.
+             */
+            mHourHandLength = mCenterX * 0.5f;
+            mMinuteHandLength = mCenterX * 0.7f;
+            mSecondHandLength = mCenterX * 0.9f;
+
+            float mScaleBackground = ((float) width) / (float) bitmapBackground.getWidth();
+            bitmapBackground = Bitmap.createScaledBitmap(bitmapBackground,
+                    (int) (bitmapBackground.getWidth() * mScaleBackground),
+                    (int) (bitmapBackground.getHeight() * mScaleBackground), true);
         }
 
         @Override
@@ -221,15 +286,98 @@ public class MurrayStudio extends CanvasWatchFaceService {
 
         @Override
         public void onDraw(Canvas canvas, Rect bounds) {
-            // Draw the background.
-            canvas.drawRect(0, 0, bounds.width(), bounds.height(), mBackgroundPaint);
+            mTime.setToNow();
 
-            // Draw H:MM in ambient mode or H:MM:SS in interactive mode.
+            // Draw the background.
+            //canvas.drawRect(0, 0, bounds.width(), bounds.height(), mBackgroundPaint);
+            canvas.drawBitmap(bitmapBackground, 0, 0, mBackgroundPaint);
+
+            month = null;
+            switch(mTime.month){
+                case 0:
+                    month = "January";
+                    break;
+                case 1:
+                    month = "February";
+                    break;
+                case 2:
+                    month = "March";
+                    break;
+                case 3:
+                    month = "April";
+                    break;
+                case 4:
+                    month = "May";
+                    break;
+                case 5:
+                    month = "June";
+                    break;
+                case 6:
+                    month = "July";
+                    break;
+                case 7:
+                    month = "August";
+                    break;
+                case 8:
+                    month = "September";
+                    break;
+                case 9:
+                    month = "October";
+                    break;
+                case 10:
+                    month = "November";
+                    break;
+                case 11:
+                    month = "December";
+                    break;
+            }
+
+            date = month + " " + mTime.monthDay;
+            widthOfDate = mTextPaint.measureText(date);
+
+            //draw the date
+            canvas.drawText(date, mCenterX - (widthOfDate / 2), mCenterY - 115, mTextPaint);
+
+            /*
+             * These calculations reflect the rotation in degrees per unit of
+             * time, e.g. 360 / 60 = 6 and 360 / 12 = 30
+             */
+            final float secondsRotation = mTime.second * 6f;
+            final float minutesRotation = mTime.minute * 6f;
+            // account for the offset of the hour hand due to minutes of the hour.
+            final float hourHandOffset = mTime.minute / 2f;
+            final float hoursRotation = (mTime.hour * 30) + hourHandOffset;
+
+            // save the canvas state before we begin to rotate it
+            canvas.save();
+
+            canvas.rotate(hoursRotation, mCenterX, mCenterY);
+            drawHand(canvas, mHourHandLength);
+
+            canvas.rotate(minutesRotation - hoursRotation, mCenterX, mCenterY);
+            drawHand(canvas, mMinuteHandLength);
+
+            canvas.rotate(secondsRotation - minutesRotation, mCenterX, mCenterY);
+            canvas.drawLine(mCenterX, mCenterY - HAND_END_CAP_RADIUS, mCenterX,
+                    mCenterY - mSecondHandLength, mHandPaint);
+
+            //canvas.drawCircle(mCenterX, mCenterY, HAND_END_CAP_RADIUS, mHandPaint);
+            // restore the canvas' original orientation.
+            canvas.restore();
+
+
+/*            // Draw H:MM in ambient mode or H:MM:SS in interactive mode.
             mTime.setToNow();
             String text = mAmbient
                     ? String.format("%d:%02d", mTime.hour, mTime.minute)
                     : String.format("%d:%02d:%02d", mTime.hour, mTime.minute, mTime.second);
-            canvas.drawText(text, mXOffset, mYOffset, mTextPaint);
+            canvas.drawText(text, mXOffset, mYOffset, mTextPaint);*/
+        }
+
+        private void drawHand(Canvas canvas, float handLength) {
+            canvas.drawRoundRect(mCenterX - HAND_END_CAP_RADIUS, mCenterY - handLength,
+                    mCenterX + HAND_END_CAP_RADIUS, mCenterY + HAND_END_CAP_RADIUS,
+                    HAND_END_CAP_RADIUS, HAND_END_CAP_RADIUS, mHandPaint);
         }
 
         /**

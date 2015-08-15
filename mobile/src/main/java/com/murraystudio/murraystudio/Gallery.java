@@ -50,7 +50,14 @@ public class Gallery extends Fragment {
 
         actionBar = (android.support.v7.app.ActionBar) ((MainActivity) getActivity())
                 .getSupportActionBar();
-        actionBar.setTitle("Murray Studio");
+
+        MainActivity main = new MainActivity();
+        if(main.getGalleryType() == main.RISK_GALLERY){
+            actionBar.setTitle("Risk Gallery");
+        }
+        else{
+            actionBar.setTitle("Graphic Design Gallery");
+        }
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
@@ -78,7 +85,13 @@ public class Gallery extends Fragment {
      * from a local content provider or remote server.
      */
     private void initDataset() {
-        imageURLS = getResources().getStringArray(R.array.image_urls);
+        MainActivity main = new MainActivity();
+        if(main.getGalleryType() == main.RISK_GALLERY){
+            imageURLS = getResources().getStringArray(R.array.risk_image_urls);
+        }
+        else{
+            imageURLS = getResources().getStringArray(R.array.graphic_design_image_urls);
+        }
     }
 
  //used for refresh swipe

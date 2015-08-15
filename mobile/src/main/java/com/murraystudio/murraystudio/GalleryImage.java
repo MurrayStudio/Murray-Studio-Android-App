@@ -50,12 +50,6 @@ public class GalleryImage {
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeResource(resources, resId, options);
-
-/*        Bitmap b = ((BitmapDrawable)image).getBitmap();
-        int height = b.getHeight();
-        int width = b.getWidth();
-        Bitmap bitmapResized = Bitmap.createScaledBitmap(b, width/20, height/20, false);
-        scaledDrawable = new BitmapDrawable(context.getResources(), bitmapResized);*/
     }
 
     private static int calculateInSampleSize(

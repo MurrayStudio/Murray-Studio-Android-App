@@ -35,6 +35,15 @@ public class GalleryImageFullScreen extends Fragment {
     public int width;
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Initialize dataset, this data would usually come from a local content provider or
+        // remote server.
+        initDataset();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -42,9 +51,14 @@ public class GalleryImageFullScreen extends Fragment {
 
         actionBar = (android.support.v7.app.ActionBar) ((MainActivity) getActivity())
                 .getSupportActionBar();
-        actionBar.setTitle("Murray Studio");
 
-        imageURLs = getActivity().getResources().getStringArray(R.array.image_urls);
+        MainActivity main = new MainActivity();
+        if(main.getGalleryType() == main.RISK_GALLERY){
+            actionBar.setTitle("Risk Gallery");
+        }
+        else{
+            actionBar.setTitle("Graphic Design Gallery");
+        }
 
         imageSlide = (SliderLayout) view.findViewById(R.id.gallery_slider);
 
@@ -58,7 +72,6 @@ public class GalleryImageFullScreen extends Fragment {
             imageSlide.addSlider(slide);
         }
 
-        MainActivity main = new MainActivity();
         imageSlide.setCurrentPosition(main.getCurrentImagePosition());
         imageSlide.stopAutoCycle();
 
@@ -69,6 +82,20 @@ public class GalleryImageFullScreen extends Fragment {
     public void onStop() {
         imageSlide.stopAutoCycle();
         super.onStop();
+    }
+
+    /**
+     * Generates Strings for RecyclerView's adapter. This data would usually come
+     * from a local content provider or remote server.
+     */
+    private void initDataset() {
+        MainActivity main = new MainActivity();
+        if(main.getGalleryType() == main.RISK_GALLERY){
+            imageURLs = getResources().getStringArray(R.array.risk_image_urls);
+        }
+        else{
+            imageURLs = getResources().getStringArray(R.array.graphic_design_image_urls);
+        }
     }
 
 }

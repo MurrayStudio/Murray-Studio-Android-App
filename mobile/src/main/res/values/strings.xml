@@ -15,14 +15,6 @@
     <string name="open">Open Drawer</string>
     <string name="close">Close Drawer</string>
 
-    <string-array name="Madlibs">
-        <item>Story Studio Pro</item>
-        <item>Create Your Own</item>
-        <item>Saved Stories</item>
-        <item>Settings</item>
-        <item>About</item>
-    </string-array>
-
     <string-array name="card_titles">
         <item>Header Placeholder String</item>
         <item>Projects</item>
@@ -34,13 +26,15 @@
         <item>Create, modify, save, and share stories using Story Studio. Utilizing Android 5.0 material design and animations, this Android app is sure to entertain for hours on both phones and tablets.</item>
         <item>Play the classic board game without the hassle of maintaining board game pieces and rolling the dice over and over. Play with friends over any wifi network or play with a computer.</item>
         <item>This website utilizes a variety of the latest web development languages to achieve beautiful minimalistic design coupled with smooth animations. Have a look around to learn more about me.</item>
+        <item>This app adheres to the latest Android design guidelines to provide the same enriching experience the web version employs to showcase my work. Additionally, this app also creates a Murray Studio watch face for use with Android Wear devices; check it out!</item>
         <item>Adobe Photoshop certification and a few years of work and personal experience with graphic design has expanded my design portfolio. Take a look at some samples.</item>
     </string-array>
 
     <string-array name="card_titles_projects">
         <item>Story Studio</item>
         <item>Risk</item>
-        <item>Murray Studio</item>
+        <item>Murray Studio (Website)</item>
+        <item>Murray Studio (App/Watch)</item>
         <item>Graphic Design</item>
     </string-array>
 
@@ -56,17 +50,19 @@
         <item>https://github.com/shamu11/Story-Studio-Pro</item>
         <item>https://github.com/shamu11/RiskProj</item>
         <item>https://github.com/shamu11/Murray-Studio</item>
+        <item>https://github.com/shamu11/Murray-Studio-Android-App</item>
         <item>http://imgur.com/a/NwODz</item>
     </string-array>
 
     <string-array name="media_urls">
         <item>https://www.youtube.com/watch?v=0aGEfgc-haQ</item>
         <item>https://github.com/shamu11/RiskProj</item>
-        <item>https://github.com/shamu11/Murray-Studio</item>
+        <item>https://youtu.be/TAEwwo7Pp3w</item>
+        <item>https://github.com/shamu11/Murray-Studio-Android-App</item>
         <item>http://imgur.com/a/NwODz</item>
     </string-array>
 
-    <string-array name="image_urls">
+    <string-array name="graphic_design_image_urls">
         <item>http://i.imgur.com/gLdTscu.jpg</item>
         <item>http://i.imgur.com/x2jcjPa.jpg</item>
         <item>http://i.imgur.com/4KQTQKN.jpg</item>
@@ -85,6 +81,15 @@
         <item>http://i.imgur.com/8yGwY0t.jpg</item>
         <item>http://i.imgur.com/x9XBOVI.jpg</item>
         <item>http://i.imgur.com/ivf59Tx.jpg</item>
+    </string-array>
+
+    <string-array name="risk_image_urls">
+        <item>http://i.imgur.com/YYRZyMD.jpg</item>
+        <item>http://i.imgur.com/1ubbQZc.png</item>
+        <item>http://i.imgur.com/FlmTmgy.png</item>
+        <item>http://i.imgur.com/F3BbNpW.png</item>
+        <item>http://i.imgur.com/3WqeCtE.png</item>
+        <item>http://i.imgur.com/V0DC0Iv.png</item>
     </string-array>
 
     <string name="about_me_title">Shamus Murray</string>

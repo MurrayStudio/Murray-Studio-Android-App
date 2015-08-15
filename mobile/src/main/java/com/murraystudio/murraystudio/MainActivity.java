@@ -48,6 +48,12 @@ public class MainActivity extends ActionBarActivity {
     //holds current gallery image selected
     private static int position;
 
+    //holds type of gallery
+    private static int galleryType;
+
+    final public int GRAPHIC_DESIGN_GALLERY = 0;
+    final public int RISK_GALLERY = 1;
+
     //used to get width of relative layout for use in slidershow
     private RelativeLayout navRelative;
     private int widthOfNav;
@@ -105,7 +111,6 @@ public class MainActivity extends ActionBarActivity {
 
                 if (child != null && mGestureDetector.onTouchEvent(motionEvent)) {
                     drawerLayout.closeDrawers();
-                    Toast.makeText(MainActivity.this, "The Item Clicked is: " + recyclerView.getChildPosition(child), Toast.LENGTH_SHORT).show();
 
                     switch (recyclerView.getChildPosition(child)) {
                         case 1:
@@ -221,4 +226,11 @@ public class MainActivity extends ActionBarActivity {
         return this.position;
     }
 
+    public void setGalleryType(int galleryType){
+        this.galleryType = galleryType;
+    }
+
+    public int getGalleryType(){
+        return this.galleryType;
+    }
 }

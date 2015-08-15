@@ -14,8 +14,8 @@
         android:label="@string/app_name"
         android:theme="@android:style/Theme.DeviceDefault" >
         <service
-            android:name=".MurrayStudio"
-            android:label="@string/my_digital_name"
+            android:name=".MurrayStudioWatchFace"
+            android:label="Murray Studio"
             android:permission="android.permission.BIND_WALLPAPER" >
             <meta-data
                 android:name="android.service.wallpaper"

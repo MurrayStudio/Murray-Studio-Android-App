@@ -1,7 +1,12 @@
 package com.murraystudio.murraystudio;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -46,6 +51,8 @@ public class NavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private int widthOfNav;
 
+    private MainActivity main;
+
 
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
@@ -70,16 +77,52 @@ public class NavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    public static class ViewHolderSecond extends RecyclerView.ViewHolder {
+    public static class ViewHolderSecond extends RecyclerView.ViewHolder implements BaseSliderView.OnSliderClickListener{
         private final SliderLayout sliderShow;
+        private Context context;
+        private String[] mediaURLs;
+        //add slides into slideshow
+        DefaultSliderView defaultSliderView1, defaultSliderView2, defaultSliderView3;
 
-        public ViewHolderSecond(View v) {
+        public ViewHolderSecond(View v, Context c) {
             super(v);
             sliderShow = (SliderLayout) v.findViewById(R.id.slider);
+            this.context = c;
+            mediaURLs = c.getResources().getStringArray(R.array.media_urls);
+
+            defaultSliderView1 = new DefaultSliderView(context);
+            defaultSliderView2 = new DefaultSliderView(context);
+            defaultSliderView3 = new DefaultSliderView(context);
+
+            defaultSliderView1.setOnSliderClickListener(this);
+            defaultSliderView2.setOnSliderClickListener(this);
+            defaultSliderView3.setOnSliderClickListener(this);
         }
 
         public SliderLayout getSliderShow() {
             return sliderShow;
+        }
+
+        public DefaultSliderView getDefaultSliderView1(){
+            return defaultSliderView1;
+        }
+
+        public DefaultSliderView getDefaultSliderView2(){
+            return defaultSliderView2;
+        }
+
+        public DefaultSliderView getDefaultSliderView3(){
+            return defaultSliderView3;
+        }
+
+        @Override
+        public void onSliderClick(BaseSliderView slider) {
+            if(slider.getDescription().equals("Murray Studio")){
+                //open murray studio youtube video
+                Intent browserIntent;
+                browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mediaURLs[2]));
+                context.startActivity(browserIntent);
+            }
         }
     }
 
@@ -103,7 +146,7 @@ public class NavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case VIEW_TYPE_FIRST:
                 return new ViewHolderFirst(v1);
             case VIEW_TYPE_SECOND:
-                return new ViewHolderSecond(v2);
+                return new ViewHolderSecond(v2, context);
         }
 
         return new ViewHolderFirst(v1);
@@ -112,6 +155,10 @@ public class NavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Log.d(TAG, "Element " + position + " set.");
+
+        main = new MainActivity();
+
+        //mediaURLs = context.getResources().getStringArray(R.array.media_urls);
 
         switch (getItemViewType(position)) {
             case VIEW_TYPE_FIRST:
@@ -142,44 +189,27 @@ public class NavAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
                 //add slides into slideshow
-                DefaultSliderView defaultSliderView1 = new DefaultSliderView(context);
-                defaultSliderView1
+                //DefaultSliderView defaultSliderView1 = new DefaultSliderView(context);
+                viewHolderSecond.getDefaultSliderView1()
                         .description("Murray Studio")
-                        .image("http://i.imgur.com/m9LupJ3.jpg")
-                        .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
-                            @Override
-                            public void onSliderClick(BaseSliderView baseSliderView) {
-                                Toast.makeText(context, baseSliderView.getDescription().toString() + "", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        .image("http://i.imgur.com/m9LupJ3.jpg");
 
-                viewHolderSecond.getSliderShow().addSlider(defaultSliderView1);
+                viewHolderSecond.getSliderShow().addSlider(viewHolderSecond.getDefaultSliderView1());
 
-                DefaultSliderView defaultSliderView2 = new DefaultSliderView(context);
-                defaultSliderView2
+                //DefaultSliderView defaultSliderView2 = new DefaultSliderView(context);
+                viewHolderSecond.getDefaultSliderView2()
                         .description("Story Studio")
-                        .image("http://i.imgur.com/jcrsUwP.jpg")
-                        .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
-                            @Override
-                            public void onSliderClick(BaseSliderView baseSliderView) {
-                                Toast.makeText(context, baseSliderView.getDescription().toString() + "", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        .image("http://i.imgur.com/jcrsUwP.jpg");
 
-                viewHolderSecond.getSliderShow().addSlider(defaultSliderView2);
+                viewHolderSecond.getSliderShow().addSlider(viewHolderSecond.getDefaultSliderView2());
 
-                DefaultSliderView defaultSliderView3 = new DefaultSliderView(context);
-                defaultSliderView3
+                //DefaultSliderView defaultSliderView3 = new DefaultSliderView(context);
+                viewHolderSecond.getDefaultSliderView3()
                         .description("Risk")
-                        .image("http://i.imgur.com/w4y8ENR.jpg")
-                        .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
-                            @Override
-                            public void onSliderClick(BaseSliderView baseSliderView) {
-                                Toast.makeText(context, baseSliderView.getDescription().toString() + "", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        .image("http://i.imgur.com/w4y8ENR.jpg");
 
-                viewHolderSecond.getSliderShow().addSlider(defaultSliderView3);
+                viewHolderSecond.getSliderShow().addSlider(viewHolderSecond.getDefaultSliderView3());
+
                 viewHolderSecond.getSliderShow().setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Invisible);
 
                 //setAnimation(viewHolderSecond.itemView, position);

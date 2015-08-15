@@ -33,6 +33,7 @@ public class Contact extends Fragment {
     private MaterialEditText subjectField;
     private MaterialEditText messageField;
     private Button sendButton;
+    private boolean canSend;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,11 +61,29 @@ public class Contact extends Fragment {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                        "mailto","s.murray.studio@gmail.com", null));
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject: " + subjectField.getText().toString() + ". From: " + nameField.getText().toString());
-                emailIntent.putExtra(Intent.EXTRA_TEXT, messageField.getText().toString());
-                startActivity(Intent.createChooser(emailIntent, "Send email..."));
+                if(nameField.getText().toString().trim().length() <= 1){
+                    Toast.makeText(getActivity(), "Name not long enough.", Toast.LENGTH_SHORT).show();
+                    canSend = false;
+                }
+                else if(subjectField.getText().toString().trim().length() <= 1){
+                    Toast.makeText(getActivity(), "Subject not long enough.", Toast.LENGTH_SHORT).show();
+                    canSend = false;
+                }
+                else if(messageField.getText().toString().trim().length() <= 1){
+                    Toast.makeText(getActivity(), "Message not long enough.", Toast.LENGTH_SHORT).show();
+                    canSend = false;
+                }
+                else{
+                    canSend = true;
+                }
+
+                if(canSend == true) {
+                    Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                            "mailto", "s.murray.studio@gmail.com", null));
+                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject: " + subjectField.getText().toString() + ". From: " + nameField.getText().toString());
+                    emailIntent.putExtra(Intent.EXTRA_TEXT, messageField.getText().toString());
+                    startActivity(Intent.createChooser(emailIntent, "Send email..."));
+                }
             }
         });
 

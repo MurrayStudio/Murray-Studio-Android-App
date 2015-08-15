@@ -54,8 +54,6 @@ import java.util.List;
 public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final String TAG = "HomeAdapter";
 
-    //holds logos for cards
-    private int[] logoArrayID = {R.drawable.story_studio_logo, R.drawable.risk_logo, R.drawable.murray_studio_logo, R.drawable.graphics_logo};
     // Allows to remember the last item shown on screen
     private int lastPosition = -1;
 

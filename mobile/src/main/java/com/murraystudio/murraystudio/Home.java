@@ -69,7 +69,6 @@ public class Home extends Fragment {
 
 
                 if (child != null && mGestureDetector.onTouchEvent(motionEvent)) {
-                    Toast.makeText(getActivity(), "The Item Clicked is: " + recyclerView.getChildPosition(child), Toast.LENGTH_SHORT).show();
 
                         switch (recyclerView.getChildPosition(child)) {
                         case 1:

@@ -45,7 +45,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     //holds descriptions for cards
     private String[] descriptions;
     //holds logos for cards
-    private int[] logoArrayID = {R.drawable.story_studio_logo, R.drawable.risk_logo, R.drawable.murray_studio_logo, R.drawable.graphics_logo};
+    private int[] logoArrayID = {R.drawable.story_studio_logo, R.drawable.risk_logo, R.drawable.murray_studio_logo, R.drawable.murray_studio_watch_logo, R.drawable.graphics_logo};
     // Allows to remember the last item shown on screen
     private int lastPosition = -1;
 
@@ -119,11 +119,20 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 case R.id.project_play_button:
                     Log.i("media url", mediaUrls[ViewHolderFirst.this.getAdapterPosition()]);
 
-                    if(ViewHolderFirst.this.getAdapterPosition() <= 2) {
+                    //load up a browser action for media
+                    if(ViewHolderFirst.this.getAdapterPosition() == 0 || ViewHolderFirst.this.getAdapterPosition() == 2 || ViewHolderFirst.this.getAdapterPosition() == 3) {
                         browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mediaUrls[ViewHolderFirst.this.getAdapterPosition()].toString()));
                         context.startActivity(browserIntent);
                     }
+                    //media is a collection of images so use app's image gallery
                     else{
+                        MainActivity main = new MainActivity();
+                        if(ViewHolderFirst.this.getAdapterPosition() == 1){
+                            main.setGalleryType(main.RISK_GALLERY);
+                        }
+                        else{
+                            main.setGalleryType(main.GRAPHIC_DESIGN_GALLERY);
+                        }
                         Fragment gallery = new Gallery();
                         FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
                         ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)
@@ -132,8 +141,8 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     }
                     break;
                 case R.id.project_open_link_button:
-
                    //future location to place murray studio urls
+                    Toast.makeText(context, "Website links not public yet.", Toast.LENGTH_SHORT).show();
 
                     break;
                 case R.id.card_view_project:
