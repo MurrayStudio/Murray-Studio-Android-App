@@ -24,12 +24,13 @@
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_gravity="center"
-        android:layout_margin="10dp"
+        android:layout_margin="2dp"
+        card_view:cardUseCompatPadding="true"
         android:clickable="true"
         android:foreground="@drawable/card_foreground"
         card_view:cardBackgroundColor="#ffffff"
         card_view:cardCornerRadius="8dp"
-        card_view:cardElevation="8dp">
+        card_view:cardElevation="4dp">
 
         <LinearLayout
             android:layout_width="match_parent"

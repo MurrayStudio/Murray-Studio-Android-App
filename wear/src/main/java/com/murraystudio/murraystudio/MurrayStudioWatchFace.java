@@ -34,7 +34,6 @@ import android.os.Message;
 import android.support.wearable.watchface.CanvasWatchFaceService;
 import android.support.wearable.watchface.WatchFaceStyle;
 import android.text.format.Time;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.WindowInsets;
 
@@ -289,8 +288,12 @@ public class MurrayStudioWatchFace extends CanvasWatchFaceService {
             mTime.setToNow();
 
             // Draw the background.
-            //canvas.drawRect(0, 0, bounds.width(), bounds.height(), mBackgroundPaint);
-            canvas.drawBitmap(bitmapBackground, 0, 0, mBackgroundPaint);
+            if(mAmbient == false) {
+                canvas.drawBitmap(bitmapBackground, 0, 0, mBackgroundPaint);
+            }
+            else{
+                canvas.drawRect(0, 0, bounds.width(), bounds.height(), mBackgroundPaint);
+            }
 
             month = null;
             switch(mTime.month){
@@ -336,7 +339,9 @@ public class MurrayStudioWatchFace extends CanvasWatchFaceService {
             widthOfDate = mTextPaint.measureText(date);
 
             //draw the date
-            canvas.drawText(date, mCenterX - (widthOfDate / 2), mCenterY - 115, mTextPaint);
+            if(mAmbient == false) {
+                canvas.drawText(date, mCenterX - (widthOfDate / 2), mCenterY - 115, mTextPaint);
+            }
 
             /*
              * These calculations reflect the rotation in degrees per unit of
@@ -357,9 +362,11 @@ public class MurrayStudioWatchFace extends CanvasWatchFaceService {
             canvas.rotate(minutesRotation - hoursRotation, mCenterX, mCenterY);
             drawHand(canvas, mMinuteHandLength);
 
-            canvas.rotate(secondsRotation - minutesRotation, mCenterX, mCenterY);
-            canvas.drawLine(mCenterX, mCenterY - HAND_END_CAP_RADIUS, mCenterX,
-                    mCenterY - mSecondHandLength, mHandPaint);
+            if(mAmbient == false) {
+                canvas.rotate(secondsRotation - minutesRotation, mCenterX, mCenterY);
+                canvas.drawLine(mCenterX, mCenterY - HAND_END_CAP_RADIUS, mCenterX,
+                        mCenterY - mSecondHandLength, mHandPaint);
+            }
 
             //canvas.drawCircle(mCenterX, mCenterY, HAND_END_CAP_RADIUS, mHandPaint);
             // restore the canvas' original orientation.

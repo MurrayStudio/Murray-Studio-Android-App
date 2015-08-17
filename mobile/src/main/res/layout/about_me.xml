@@ -27,13 +27,14 @@
             android:id="@+id/card_view_about_me"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            card_view:cardUseCompatPadding="true"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
+            android:layout_margin="2dp"
             android:clickable="true"
             android:foreground="@drawable/card_foreground"
             card_view:cardBackgroundColor="#ffffff"
             card_view:cardCornerRadius="8dp"
-            card_view:cardElevation="8dp">
+            card_view:cardElevation="4dp">
 
             <LinearLayout
                 android:layout_width="match_parent"

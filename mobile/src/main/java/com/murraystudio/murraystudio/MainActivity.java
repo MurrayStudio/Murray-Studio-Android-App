@@ -1,5 +1,6 @@
 package com.murraystudio.murraystudio;
 
+import android.graphics.drawable.GradientDrawable;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -44,6 +45,7 @@ public class MainActivity extends ActionBarActivity {
     private Fragment fragment;
     private FragmentTransaction fragmentTrans;
     protected String[] mDataset;
+    private TextView watchTextHint;
 
     //holds current gallery image selected
     private static int position;
@@ -79,6 +81,12 @@ public class MainActivity extends ActionBarActivity {
 
         //sets default gallery positon to 0
         position = 0;
+
+        //init text
+        watchTextHint = (TextView) findViewById(R.id.watchTextHint);
+        if(getResources().getConfiguration().orientation == 2) { //2 is landscape
+            watchTextHint.setVisibility(View.INVISIBLE);
+        }
 
         //init layouts
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
