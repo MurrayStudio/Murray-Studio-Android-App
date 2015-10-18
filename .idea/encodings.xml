@@ -10,10 +10,8 @@
     <file url="file://$PROJECT_DIR$/mobile/src/main/res/layout-large/custom_row.xml" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/mobile/src/main/res/layout-small/custom_row.xml" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/mobile/src/main/res/layout-xlarge/custom_row.xml" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/mobile/src/main/res/layout-xlarge/recycler_view.xml" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/mobile/src/main/res/layout/custom_row.xml" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/mobile/src/main/res/layout/recycler_view.xml" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/mobile/src/main/res/layout/recycler_view_nav.xml" charset="windows-1252" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
