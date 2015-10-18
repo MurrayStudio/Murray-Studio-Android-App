@@ -46,7 +46,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //holds titles for cards, position 0 contains header placeholder string
     private String[] mDataSet;
     //holds logos for cards, -1 used as header placeholder positon
-    private int[] logoArrayID = {-1, R.drawable.story_studio_logo, R.drawable.murray_studio_logo, R.drawable.graphics_logo};
+    private int[] logoArrayID = {-1, R.drawable.story_studio_logo, R.drawable.murray_studio_logo, R.drawable.contact_logo2};
     // Allows to remember the last item shown on screen
     private int lastPosition = -1;
 
